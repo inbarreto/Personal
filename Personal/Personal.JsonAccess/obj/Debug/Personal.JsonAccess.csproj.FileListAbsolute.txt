@@ -1,0 +1,4 @@
+E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.dll
+E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.pdb
+E:\Proyects\personal\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.dll
+E:\Proyects\personal\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.pdb

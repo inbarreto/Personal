@@ -1,0 +1,4 @@
+E:\Proyects\personal\Personal\Personal.Domain\Bin\Debug\Personal.Domain.dll
+E:\Proyects\personal\Personal\Personal.Domain\Bin\Debug\Personal.Domain.pdb
+E:\Proyects\personal\Personal\Personal.Domain\obj\Debug\Personal.Domain.dll
+E:\Proyects\personal\Personal\Personal.Domain\obj\Debug\Personal.Domain.pdb

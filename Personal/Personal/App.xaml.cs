@@ -64,15 +64,24 @@ namespace Personal
         // This code will not execute when the application is reactivated
         private void Application_Launching(object sender, LaunchingEventArgs e)
         {
-
+            Usuario usuario = null; ;
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("Login"))
+            {
+                usuario = (Usuario)IsolatedStorageSettings.ApplicationSettings["Login"];
+                StateModel.CargaKey("Usuario", usuario);
+            }
         }
 
         // Code to execute when the application is activated (brought to foreground)
         // This code will not execute when the application is first launched
         private void Application_Activated(object sender, ActivatedEventArgs e)
         {
-            Usuario usuario = (Usuario)IsolatedStorageSettings.ApplicationSettings["Login"];
-            StateModel.CargaKey("Usuario", usuario);
+            Usuario usuario = null; ;
+            if (IsolatedStorageSettings.ApplicationSettings.Contains("Login"))
+            {
+                usuario = (Usuario)IsolatedStorageSettings.ApplicationSettings["Login"];
+                StateModel.CargaKey("Usuario", usuario);
+            }
         }
 
         // Code to execute when the application is deactivated (sent to background)
@@ -93,6 +102,14 @@ namespace Personal
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
+            if (usuario != null)
+            {
+                if (IsolatedStorageSettings.ApplicationSettings.Contains("Login"))
+                    IsolatedStorageSettings.ApplicationSettings.Remove("Login");
+                IsolatedStorageSettings.ApplicationSettings.Add("Login", usuario);
+            }
+              
         }
 
         // Code to execute if a navigation fails

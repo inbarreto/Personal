@@ -167,6 +167,7 @@
                    Style="{StaticResource regular}" TextWrapping="Wrap">
         </TextBlock>
         </ListBox>
+        <MediaElement></MediaElement>
     </Grid>
 
 </phone:PhoneApplicationPage>

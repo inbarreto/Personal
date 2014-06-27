@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using Personal.Domain.Enums;
 using Microsoft.Phone.Net.NetworkInformation;
 using Personal.Domain.Utils;
+using Microsoft.Phone.Tasks;
 
 namespace Personal
 {   
@@ -252,23 +253,25 @@ namespace Personal
                 case "pivItemMiCuenta":
                     if (!StateModel.ExisteKey("Usuario"))
                     {
-                        miCuentaTexto2.Visibility = System.Windows.Visibility.Collapsed;
+                        //miCuentaTexto2.Visibility = System.Windows.Visibility.Collapsed;
                         txtSuscripcion.Visibility = System.Windows.Visibility.Collapsed;
                         miCuentaTexto4.Visibility = System.Windows.Visibility.Collapsed;
                         miCuentaTexto5.Visibility = System.Windows.Visibility.Collapsed;
                         miCuentaTexto6.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto7.Visibility = System.Windows.Visibility.Collapsed;
+                        //miCuentaTexto7.Visibility = System.Windows.Visibility.Collapsed;
                         miCuentaTexto1.Visibility = System.Windows.Visibility.Visible;
+                        txtLogOut.Visibility = System.Windows.Visibility.Collapsed;
                     }
                     else
                     {
+                        txtLogOut.Visibility = System.Windows.Visibility.Visible;
                         miCuentaTexto1.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto2.Visibility = System.Windows.Visibility.Visible;
+                        //miCuentaTexto2.Visibility = System.Windows.Visibility.Visible;
                         txtSuscripcion.Visibility = System.Windows.Visibility.Visible;
                         miCuentaTexto4.Visibility = System.Windows.Visibility.Visible;
                         miCuentaTexto5.Visibility = System.Windows.Visibility.Visible;
                         miCuentaTexto6.Visibility = System.Windows.Visibility.Visible;
-                        miCuentaTexto7.Visibility = System.Windows.Visibility.Visible;
+                        //miCuentaTexto7.Visibility = System.Windows.Visibility.Visible;
                         if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                         {
                             txtSuscripcion.Text = "activar suscripción";
@@ -567,12 +570,12 @@ namespace Personal
             this.CargaSuscripcion(response);
             if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Desactivar).ToString())
             {
-                MessageBox.Show("suscripción satisfactoria.", "OK", MessageBoxButton.OK);
+                //MessageBox.Show("suscripción satisfactoria.", "OK", MessageBoxButton.OK);
                 txtSuscripcion.Text = "desactivar suscripción";
             }
             else if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
             {
-                MessageBox.Show("desuscripción satisfactoria.", "OK", MessageBoxButton.OK);
+                //MessageBox.Show("desuscripción satisfactoria.", "OK", MessageBoxButton.OK);
                 txtSuscripcion.Text = "activar suscripción";
             }
             //parse it
@@ -589,6 +592,51 @@ namespace Personal
         {
             NavigationService.Navigate(new Uri("/Views/Favoritos.xaml", UriKind.Relative));
             return;
+        }
+
+        private void txtViendo_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Views/Viendo.xaml", UriKind.Relative));
+            return;
+        }
+
+        private void txtVistas_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("/Views/Vistas.xaml", UriKind.Relative));
+            return;
+        }
+
+        private void txtMasApps_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+            webBrowserTask.Uri = new Uri("http://www.windowsphone.com/es-AR/store/publishers?publisherId=Telecom%2BPersonal%2BS.A.&appId=ce997fda-bb18-49de-ae38-ff02eb7fced7");
+            webBrowserTask.Show();
+            
+        }
+
+        private void txtEntretenimiento_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            WebBrowserTask webBrowserTask = new WebBrowserTask();
+            webBrowserTask.Uri = new Uri("http://movil.personal.com.ar/");
+            webBrowserTask.Show();
+            
+        }
+
+        private void txtLogOut_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+            try
+            {
+
+                if (System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("Login"))
+                    System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Remove("Login");
+                StateModel.BorrarKey("Usuario");
+                pivotHome.SelectedIndex = 0;
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
 
     }

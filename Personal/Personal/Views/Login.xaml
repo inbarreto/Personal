@@ -29,7 +29,7 @@
         <TextBlock x:Name="lblNumeroLinea" TextWrapping="Wrap" Text="número de linea" Foreground="white" Width="160" 
                    Height="30" Margin="20,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <TextBox x:Name="txtNroLinea" HorizontalAlignment="Left" Height="72" Margin="10,5,0,0" TextWrapping="Wrap" 
-                 Text="ozcoidi@hotmail.com" VerticalAlignment="Top" InputScope="Number"
+                 Text="1166049473" VerticalAlignment="Top" InputScope="Number"
              Style="{StaticResource txtBoxLogin}" Tap="txtNroLinea_Tap" LostFocus="txtNroLinea_LostFocus" AcceptsReturn="False" />
         <TextBlock TextWrapping="Wrap" Text="clave personal"  Margin="20,15,0,0" HorizontalAlignment="Left" 
                    Style="{StaticResource textosBlancos}" />

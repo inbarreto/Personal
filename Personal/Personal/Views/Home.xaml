@@ -130,16 +130,17 @@
                 <StackPanel>
                 <ListBox>
                     <TextBlock x:Name="miCuentaTexto1" Text="iniciar sesión" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtLogin_Tap"/>
-                        <TextBlock x:Name="miCuentaTexto2" Text="perfil" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
+                        <!--TextBlock x:Name="miCuentaTexto2" Text="perfil" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/-->
                         <TextBlock x:Name="txtSuscripcion" Text="activar suscripción" FontFamily="Portable User Interface" Foreground="#7D3D76" Margin="15,3,0,10" FontSize="36" FontWeight="Bold" Tap="txtSuscripcion_Tap"/>
                         <TextBlock x:Name="miCuentaTexto4" Text="favoritos" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtFavoritos_Tap" />
-                        <TextBlock x:Name="miCuentaTexto5" Text="ya vistas" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
-                        <TextBlock x:Name="miCuentaTexto6" Text="estoy viendo" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
-                        <TextBlock x:Name="miCuentaTexto7" Text="activar control parental" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
-                        <TextBlock Text="entretenimiento y más" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
-                    <TextBlock Text="más apps" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/>
+                        <TextBlock x:Name="miCuentaTexto5" Text="ya vistas" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtVistas_Tap" />
+                        <TextBlock x:Name="miCuentaTexto6" Text="estoy viendo" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtViendo_Tap" />
+                        <!--TextBlock x:Name="miCuentaTexto7" Text="activar control parental" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36"/-->
+                        <TextBlock Text="entretenimiento y más" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtEntretenimiento_Tap"/>
+                        <TextBlock Text="más apps" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtMasApps_Tap"/>
                         <TextBlock Text="términos y condiciones" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtTyC_Tap"/>
-                </ListBox>
+                        <TextBlock  x:Name="txtLogOut"  Text="log out" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtLogOut_Tap"/>
+                    </ListBox>
                
                 </StackPanel>
             </phone:PivotItem>

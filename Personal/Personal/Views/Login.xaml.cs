@@ -52,7 +52,7 @@ namespace Personal.Views
                 throw ex;
             }
         }
-       
+
         private void txtNroLinea_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             try
@@ -130,7 +130,7 @@ namespace Personal.Views
                 if (usuarioObjeto.username != null)
                 {
                     StateModel.CargaKey("Usuario", usuarioObjeto);
-                    MessageBox.Show("se ha logueado correctamente.", "Estado Login", MessageBoxButton.OK);
+                    //MessageBox.Show("se ha logueado correctamente.", "Estado Login", MessageBoxButton.OK);
                     NavigationService.Navigate(new Uri("/Views/Home.xaml", UriKind.Relative));
                 }
                 else

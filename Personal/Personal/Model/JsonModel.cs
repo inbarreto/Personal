@@ -105,8 +105,8 @@ namespace Personal.Model
                  JObject objetoJson = StringToJsonObject(jsonString);
                  JToken tokenResponse = objetoJson["response"];
 
-                 pelicula.viewed = Convert.ToBoolean((int)tokenResponse["viewed"]);
-                 pelicula.favorite = Convert.ToBoolean((int)tokenResponse["favorite"]);
+                 pelicula.viewed = tokenResponse["viewed"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["viewed"]) : false;
+                 pelicula.favorite =tokenResponse["favorite"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["favorite"]) :false ;
                  pelicula.paid_hd = Convert.ToBoolean((int)tokenResponse["paid_hd"]);
                  pelicula.paid_sd = Convert.ToBoolean((int)tokenResponse["paid_sd"]);
                  pelicula.id = (string)tokenResponse["id"];

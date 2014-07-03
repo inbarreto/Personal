@@ -1,4 +1,5 @@
-﻿using Microsoft.Phone.Shell;
+﻿using Microsoft.Phone.Net.NetworkInformation;
+using Microsoft.Phone.Shell;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,5 +38,12 @@ namespace Personal.Model
         {
             PhoneApplicationService.Current.State.Remove(key);
         }
+
+
+        public static bool HayRed()
+        {
+            return NetworkInterface.GetIsNetworkAvailable();
+        }
+
     }
 }

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Personal.Controles.PlayPelicula"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    d:DesignHeight="600" d:DesignWidth="480">
+    
+    
+        <Grid x:Name="LayoutRoot" Background="Transparent">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+            <MediaElement Grid.Row="0" x:Name="meElement"  Visibility="Collapsed"/>
+            <TextBlock Grid.Row="0" x:Name="tbMarker" Margin="10,0,10,35"
+                VerticalAlignment="Bottom" TextWrapping="Wrap" />
+        </Grid>
+    
+</UserControl>

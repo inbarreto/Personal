@@ -4,10 +4,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    FontFamily="{StaticResource PhoneFontFamilyNormal}"
-    FontSize="{StaticResource PhoneFontSizeNormal}"
-    Foreground="{StaticResource PhoneForegroundBrush}"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:ec="clr-namespace:Microsoft.Expression.Interactivity.Core;assembly=Microsoft.Expression.Interactions"                          
+
+   
     d:DesignHeight="550" d:DesignWidth="480">
+
+
 
 
     <UserControl.Resources>
@@ -16,7 +19,32 @@
 
     </UserControl.Resources>       
     <StackPanel>
-    <ListBox x:Name="listaPeliculas" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="BotonVer">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0:0:0.2"/>
+                    <!--<VisualTransition GeneratedDuration="0:0:0.5" To="VisualState"/>
+                    <VisualTransition From="VisualState1" GeneratedDuration="0:0:0.5" To="VisualState"/>-->
+
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="VisualState">
+                    <Storyboard>
+                        <ColorAnimation Duration="1.0:0:0" To="#FF7E517A" Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                        <ColorAnimation Duration="1.0:0:0" To="#FF7E517A" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                        <ColorAnimation Duration="1.0:0:0" To="White" Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="VisualState1">
+                    <Storyboard>
+                        <ColorAnimation Duration="2.0:0:0" To="#FF7E517A" Storyboard.TargetProperty="(Control.BorderBrush).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                        <ColorAnimation Duration="2.0:0:0" To="White" Storyboard.TargetProperty="(Control.Foreground).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                        <ColorAnimation Duration="2.0:0:0" To="#FF7E517A" Storyboard.TargetProperty="(Control.Background).(SolidColorBrush.Color)" Storyboard.TargetName="btnVerMas" d:IsOptimized="True"/>
+                    </Storyboard>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <ListBox x:Name="listaPeliculas" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                 
@@ -57,7 +85,13 @@
                 </ListBox.ItemTemplate>
             </ListBox>
 
-        <Button x:Name="btnVerMas" Content="ver más" Tap="verMas_Tap" Visibility="Visible" Height="70"/>
-    
+        <Button x:Name="btnVerMas" Content="ver más" Tap="verMas_Tap"  Visibility="Collapsed" Height="70" Foreground="#7E517A" BorderBrush="#7E517A">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Tap">
+                    <ec:GoToStateAction StateName="VisualState1" UseTransitions="True" />
+                
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Button>
     </StackPanel>
 </UserControl>

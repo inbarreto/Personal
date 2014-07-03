@@ -63,10 +63,7 @@ namespace Personal.Controles
                 //lista.Remove(peliculaUnica);
                 if (!StateModel.ExisteKey("VieneDeBuscar"))
                 {
-                    btnVerMas.Visibility = System.Windows.Visibility.Collapsed;
-                    btnVerMas.Foreground = Utils.getColorFromHexa("#7E517A");
-                    btnVerMas.BorderBrush = Utils.getColorFromHexa("#7E517A");
-                    
+                    btnVerMas.Visibility = System.Windows.Visibility.Visible;                  
                 }
                 StateModel.BorrarKey("VieneDeBuscar");
                 listaPeliculas.ItemsSource = null;
@@ -433,6 +430,8 @@ namespace Personal.Controles
         {
             try
             {
+                Image img = sender as Image;
+                
                 usuario = StateModel.ObtieneKey("Usuario") as Usuario;
                 StateModel.CargaKey("esmas", true);
                 PeliculasPorGeneroJson verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;                
@@ -441,7 +440,7 @@ namespace Personal.Controles
                 if (usuario != null)
                     verMasParametro.session_id = usuario.session_id;
                 string jsonString = JsonConvert.SerializeObject(verMasParametro);
-
+               
                 CargaPeliculasPost(jsonString, URL.MenuCategoria);
 
             }

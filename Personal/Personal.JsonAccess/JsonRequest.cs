@@ -26,54 +26,74 @@ namespace Personal.JsonAccess
 
         public void beginRequest(string postParameters,string Url)
         {
-            // Assemble postData string
-            postData = postParameters;
-            // Set destination url
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(Url, UriKind.Absolute));
-            // Set request method, using POST of course
-            request.Method = "POST";
-            // This is important
-            request.ContentType = "application/x-www-form-urlencoded";
-            // Start request
-            request.BeginGetRequestStream(new AsyncCallback(RequestReady), request);
+            try
+            {
+                // Assemble postData string
+                postData = postParameters;
+                // Set destination url
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(Url, UriKind.Absolute));
+                // Set request method, using POST of course
+                request.Method = "POST";
+                // This is important
+                request.ContentType = "application/x-www-form-urlencoded";
+                // Start request
+                request.BeginGetRequestStream(new AsyncCallback(RequestReady), request);
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }            
         }
 
 
         void RequestReady(IAsyncResult asyncResult)
         {
-
-            HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
-            // Retrieve created stream
-            Stream stream = request.EndGetRequestStream(asyncResult);
-            // Avoid 
-            Deployment.Current.Dispatcher.BeginInvoke(delegate()
+            try
             {
-                StreamWriter writer = new StreamWriter(stream);
-                // Write data to the stream
-                writer.Write(postData);
-                writer.Flush();
-                writer.Close();
-                // Expect response
-                request.BeginGetResponse(new AsyncCallback(ResponseReady), request);
-            });
-
+                HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
+                // Retrieve created stream
+                Stream stream = request.EndGetRequestStream(asyncResult);
+                // Avoid 
+                Deployment.Current.Dispatcher.BeginInvoke(delegate()
+                {
+                    StreamWriter writer = new StreamWriter(stream);
+                    // Write data to the stream
+                    writer.Write(postData);
+                    writer.Flush();
+                    writer.Close();
+                    // Expect response
+                    request.BeginGetResponse(new AsyncCallback(ResponseReady), request);
+                });
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }            
         }
 
         void ResponseReady(IAsyncResult asyncResult)
         {
-            HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
-            HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(asyncResult);
-            // Avoid trashing the procedure
+            try
+            {
+                HttpWebRequest request = asyncResult.AsyncState as HttpWebRequest;
+                HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(asyncResult);
+                // Avoid trashing the procedure
 
-            Deployment.Current.Dispatcher.BeginInvoke(delegate()
-            {// Retrieve response stream
-                Stream responseStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(responseStream);
-                // Read response
-                responseTxt = reader.ReadToEnd();
-                // Dispatch event
-                Completed(this, new EventArgs());
-            });
+                Deployment.Current.Dispatcher.BeginInvoke(delegate()
+                {// Retrieve response stream
+                    Stream responseStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(responseStream);
+                    // Read response
+                    responseTxt = reader.ReadToEnd();
+                    // Dispatch event
+                    Completed(this, new EventArgs());
+                });
+            }
+            catch (Exception ex) 
+            {                
+                throw ex;
+            }
+            
         }
 
     }

@@ -144,7 +144,7 @@
                    ></TextBlock>
 
 
-            <Image x:Name="imgVerAhora" Source="/Imagenes/ver ahora-inactivo.png" Grid.Row="1" Height="60" Margin="25,5,20,20" VerticalAlignment="Bottom" Tap="imgVerAhora_Tap" />
+            <Image x:Name="imgVerAhora" Source="/Imagenes/ver ahora-inactivo.png" Grid.Row="1" Height="60" Margin="25,5,20,20" VerticalAlignment="Bottom" Tap="imgVerAhora_Tap" DoubleTap="imgVerAhora_DoubleTap" />
         </StackPanel>
     </ScrollViewer>
     

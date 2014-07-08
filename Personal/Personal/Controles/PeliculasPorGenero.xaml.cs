@@ -446,9 +446,13 @@ namespace Personal.Controles
             }
             catch (Exception)
             {
-                
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }
+        }
+
+        private void imgVer_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+
         }
 
 

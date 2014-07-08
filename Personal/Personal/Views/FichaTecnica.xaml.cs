@@ -153,6 +153,7 @@ namespace Personal.Views
                 PlayJson playJson = new PlayJson();
                 playJson.content_id = peliculaID;
                 playJson.session_id = usuario.session_id;
+                playJson.device_type = "windows_phone";
                 string jsonPostPlay = JsonConvert.SerializeObject(playJson);
                 CargaPlayPost(jsonPostPlay, URL.Play);
             }
@@ -199,9 +200,7 @@ namespace Personal.Views
         {
             try
             {
-                Play play = JsonModel.ConvierteJsonPlay(jsonString);
-                
-
+                Play play = JsonModel.ConvierteJsonPlay(jsonString);                
                 MediaPlayerLauncher mediaPlayerLauncher = new MediaPlayerLauncher();
                 mediaPlayerLauncher.Media = new Uri(play.direct_url, UriKind.Absolute);
                 mediaPlayerLauncher.Location = MediaLocationType.Data;
@@ -211,10 +210,9 @@ namespace Personal.Views
                 mediaPlayerLauncher.Show();
 
             }
-            catch (Exception)
-            {
-                
-                throw;
+            catch (Exception ex)
+            {                
+                throw ex;
             }
 
 
@@ -273,6 +271,11 @@ namespace Personal.Views
             JsonRequest responseObject = sender as JsonRequest;
             string response = responseObject.ResponseTxt;
             //parse it
+        }
+
+        private void imgVerAhora_DoubleTap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+
         }
       
 

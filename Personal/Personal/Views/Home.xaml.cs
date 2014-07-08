@@ -42,24 +42,39 @@ namespace Personal
         void Home_Loaded(object sender, RoutedEventArgs e)
         {
             try
-
-            {   
-                
-                Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
-
-                string genero = "genero_comedia";
-                StateModel.CargaKey("named_criteria", genero);
-                CargaPeliculasHome(usuario);
-
-
-                MenuJson postMenu = new MenuJson();
-                string postDataMenu = JsonConvert.SerializeObject(postMenu);
-                CargaMenusPost(postDataMenu, URL.Menus);
-                
-            }
-            catch (Exception )
             {
-                throw ;
+                if (!StateModel.HayRed())
+                {
+                    bool red = true;
+                    while (red)
+                    {
+                        red = StateModel.HayRed() == true ? false : true;
+                        MessageBox.Show("No hay red, conectando...", "error", MessageBoxButton.OK);
+                    }
+                }
+                if (StateModel.HayRed())
+                {
+                    Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
+
+                    string genero = "genero_comedia";
+                    StateModel.CargaKey("named_criteria", genero);
+                    CargaPeliculasHome(usuario);
+
+                    
+                    ObtengoLasPublicities(usuario);
+                    MenuJson postMenu = new MenuJson();
+                    string postDataMenu = JsonConvert.SerializeObject(postMenu);
+                    CargaMenusPost(postDataMenu, URL.Menus);
+                }
+                else
+                {
+
+                    MessageBox.Show("No hay red, conectando...", "error", MessageBoxButton.OK);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -77,7 +92,11 @@ namespace Personal
             //ratingControl.EstrellasActivas(4);
             peliculasHome.CargaPeliculasPost(post_dataPeliculas, URL.MenuCategoria);
 
+         
+        }
 
+        private void ObtengoLasPublicities(Usuario usuario)
+        {
             PublicitiesJson publi = new PublicitiesJson();
             publi.session_id = usuario != null ? usuario.session_id : string.Empty;
             publi.device = "PC";
@@ -158,12 +177,7 @@ namespace Personal
 
         private void TextBlock_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            MessageBoxResult mensaje = MessageBox.Show("número de linea o clave incorrecta", "", MessageBoxButton.OK);
-
-
-            //Controles.CustomMessegeBox cm = new Controles.CustomMessegeBox();
-            //Popup customMessege = new Popup();
-            //Personal.Controles.CustomMessegeBox CM = new Controles.CustomMessegeBox();
+            MessageBoxResult mensaje = MessageBox.Show("número de linea o clave incorrecta", "", MessageBoxButton.OK);                                          
 
         }
 
@@ -187,11 +201,8 @@ namespace Personal
             try
             {
                 TextBlock texto = e.OriginalSource as TextBlock;
-
                 string valor = texto.Text;
-
                Generos genero = listaGeneros.Find(x => x.Genero == valor);
-
                StateModel.CargaKey("genero", genero.Genero);
                StateModel.CargaKey("named_criteria", genero.NameCriteria);
                
@@ -253,25 +264,25 @@ namespace Personal
                 case "pivItemMiCuenta":
                     if (!StateModel.ExisteKey("Usuario"))
                     {
-                        //miCuentaTexto2.Visibility = System.Windows.Visibility.Collapsed;
+                        
                         txtSuscripcion.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto4.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto5.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto6.Visibility = System.Windows.Visibility.Collapsed;
-                        //miCuentaTexto7.Visibility = System.Windows.Visibility.Collapsed;
-                        miCuentaTexto1.Visibility = System.Windows.Visibility.Visible;
+                        txtFavoritos.Visibility = System.Windows.Visibility.Collapsed;
+                        txtYaVistas.Visibility = System.Windows.Visibility.Collapsed;
+                        txtEstoyViendo.Visibility = System.Windows.Visibility.Collapsed;
+                        
+                        txtIniciarSesion.Visibility = System.Windows.Visibility.Visible;
                         txtLogOut.Visibility = System.Windows.Visibility.Collapsed;
                     }
                     else
                     {
                         txtLogOut.Visibility = System.Windows.Visibility.Visible;
-                        miCuentaTexto1.Visibility = System.Windows.Visibility.Collapsed;
-                        //miCuentaTexto2.Visibility = System.Windows.Visibility.Visible;
+                        txtIniciarSesion.Visibility = System.Windows.Visibility.Collapsed;
+                        
                         txtSuscripcion.Visibility = System.Windows.Visibility.Visible;
-                        miCuentaTexto4.Visibility = System.Windows.Visibility.Visible;
-                        miCuentaTexto5.Visibility = System.Windows.Visibility.Visible;
-                        miCuentaTexto6.Visibility = System.Windows.Visibility.Visible;
-                        //miCuentaTexto7.Visibility = System.Windows.Visibility.Visible;
+                        txtFavoritos.Visibility = System.Windows.Visibility.Visible;
+                        txtYaVistas.Visibility = System.Windows.Visibility.Visible;
+                        txtEstoyViendo.Visibility = System.Windows.Visibility.Visible;
+                        
                         if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                         {
                             txtSuscripcion.Text = "activar suscripción";
@@ -324,11 +335,8 @@ namespace Personal
             }
             catch (Exception)
             {
-                
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             } 
-
-
         }
 
         private void txtBuscar_Evento(object sender, RoutedEventArgs e)
@@ -338,32 +346,36 @@ namespace Personal
                 if (txtBuscar.Text.Length > 0)
                 {
                     this.BuscarPorFiltro();
-                }
-                //StateModel.CargaKey("idPelicula", idPelicula);
-
-                //this.VerPelicula(img, idPelicula);
-                //img.Source = PeliculaModel.BotonVer(false);
+                }              
             }
             catch (Exception)
             {
 
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }
-
         }
 
         private void BuscarPorFiltro()
         {
-            usuario = (Usuario)StateModel.ObtieneKey("Usuario");
-            this.Focus();
-            string textoBusqueda = txtBuscar.Text;
-            string session = usuario !=null ? usuario.session_id :string.Empty;
-            controlBuscarPeliculas.VaciaListaPeliculas();
-            BuscarJson buscarJson = new BuscarJson(session, textoBusqueda);
-            string postBuscarPeliculas = JsonConvert.SerializeObject(buscarJson);
-            controlBuscarPeliculas.CargaPeliculasPost(postBuscarPeliculas,URL.MenuCategoria);
-            StateModel.CargaKey("VieneDeBuscar", true);
-            txtResultado.Visibility = System.Windows.Visibility.Visible;
+            try
+            {
+                usuario = (Usuario)StateModel.ObtieneKey("Usuario");
+                this.Focus();
+                string textoBusqueda = txtBuscar.Text;
+                string session = usuario != null ? usuario.session_id : string.Empty;
+                controlBuscarPeliculas.VaciaListaPeliculas();
+                BuscarJson buscarJson = new BuscarJson(session, textoBusqueda);
+                string postBuscarPeliculas = JsonConvert.SerializeObject(buscarJson);
+                controlBuscarPeliculas.CargaPeliculasPost(postBuscarPeliculas, URL.MenuCategoria);
+                StateModel.CargaKey("VieneDeBuscar", true);
+                txtResultado.Visibility = System.Windows.Visibility.Visible;
+            }
+            catch (Exception)
+            {
+                
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
+            }
+            
         }
         private void imgVer_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
@@ -375,8 +387,7 @@ namespace Personal
             }
             catch (Exception)
             {
-
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }
 
 
@@ -394,7 +405,7 @@ namespace Personal
             catch (Exception)
             {
 
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }
 
 
@@ -410,7 +421,7 @@ namespace Personal
             catch (Exception)
             {
 
-                throw;
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }
 
 
@@ -469,8 +480,8 @@ namespace Personal
 
     }
             catch (Exception)
-            {                
-                throw;
+            {
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }            
         }
 
@@ -499,10 +510,12 @@ namespace Personal
         {
             try
             {
-                List<Publicities> listaPublicities = new List<Publicities>();
-                listaPublicities = JsonModel.ConvierteJsonPublicities(response);                
-                PivotItem pivotItem;
+                List<Publicities> listaPublicities = new List<Publicities>();                                
                 PublicitiesControl publicitiesControl = new PublicitiesControl();
+                pivotItem1.Content = null;
+                PivotItem pivotItem;
+                publicitiesControl.DataContext = null;                                
+                listaPublicities = JsonModel.ConvierteJsonPublicities(response);                                
                 publicitiesControl.DataContext = listaPublicities[0];
                 pivotItem1.Content = publicitiesControl;                                            
                 int i = 0;
@@ -522,8 +535,8 @@ namespace Personal
                 }            
             }
             catch (Exception )
-            {                
-                throw;
+            {
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
             }        
         }
 

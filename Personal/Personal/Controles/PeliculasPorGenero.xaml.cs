@@ -57,8 +57,8 @@ namespace Personal.Controles
                 //Pelicula peliculaUnica = lista.First<Pelicula>();
                 foreach (Pelicula item in lista)
                 {
-                    if (item.title.Length > 22)
-                        item.title = item.title.Substring(0, 19) + "...";
+                    if (item.title.Length > 20)
+                        item.title = item.title.Substring(0, 16) + "...";
                 }
                 //lista.Remove(peliculaUnica);
                 if (!StateModel.ExisteKey("VieneDeBuscar"))
@@ -207,8 +207,7 @@ namespace Personal.Controles
             Pelicula peliculaCargada = JsonModel.ConvierteJsonAPelicula(jsonPelicula);
             if (!StateModel.ExisteKey("Usuario"))
             {
-                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative)); 
-                return;
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));                 
             }
             else
             {

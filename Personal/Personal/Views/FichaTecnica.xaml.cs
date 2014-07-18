@@ -33,16 +33,18 @@ namespace Personal.Views
         Pelicula peliculaCargada = new Pelicula();                        
         void FichaTecnica_Loaded(object sender, RoutedEventArgs e)
         {
-                       
+
+            peliculaID = StateModel.ObtieneKey("idPelicula").ToString();
+
+            usuario = StateModel.ObtieneKey("Usuario") as Usuario;
             
-            if (PhoneApplicationService.Current.State.ContainsKey("idPelicula"))
-                peliculaID = PhoneApplicationService.Current.State["idPelicula"].ToString();
-
-            if (PhoneApplicationService.Current.State.ContainsKey("Usuario"))
-                usuario= (Usuario)PhoneApplicationService.Current.State["Usuario"];
-
             PeliculaJson peliculaJson = new PeliculaJson();
-            peliculaJson.element_id = peliculaID;
+
+            if (peliculaID.Length > 6)
+                peliculaJson.element_id = peliculaID;
+            else
+                peliculaJson.ref_id = peliculaID;
+
             peliculaJson.session_id = usuario != null ? usuario.session_id : string.Empty;
             
             string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);            

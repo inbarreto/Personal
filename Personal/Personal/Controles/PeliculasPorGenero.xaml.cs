@@ -207,30 +207,29 @@ namespace Personal.Controles
             Pelicula peliculaCargada = JsonModel.ConvierteJsonAPelicula(jsonPelicula);
             if (!StateModel.ExisteKey("Usuario"))
             {
-                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));                 
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
             }
             else
             {
                 Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
                 if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                 {
-                    MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OK);
-                }
-            }
-            bool hayRed = NetworkInterface.GetIsNetworkAvailable();
-            if (hayRed)
-            {
-                PlayJson playJson = new PlayJson();
-                playJson.content_id = peliculaCargada.id;
-                playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
-                string jsonPostPlay = JsonConvert.SerializeObject(playJson);
+                    MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OK); bool hayRed = NetworkInterface.GetIsNetworkAvailable();
+                    if (hayRed)
+                    {
+                        PlayJson playJson = new PlayJson();
+                        playJson.content_id = peliculaCargada.id;
+                        playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
+                        string jsonPostPlay = JsonConvert.SerializeObject(playJson);
 
-                PeliculaModel peliculaModel = new PeliculaModel();
-                peliculaModel.EjecutaMultimediaPelicula(playJson);
-            }
-            else
-            {
-                MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
+                        PeliculaModel peliculaModel = new PeliculaModel();
+                        peliculaModel.EjecutaMultimediaPelicula(playJson);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
+                    }
+                }               
             }
         }
 

@@ -103,63 +103,68 @@ namespace Personal.Model
 	        {	        
 		         Pelicula pelicula =  new Pelicula();
                  JObject objetoJson = StringToJsonObject(jsonString);
-                 JToken tokenResponse = objetoJson["response"];
+                 int tokenCount = Convert.ToInt16(objetoJson["count"].ToString());
 
-                 pelicula.viewed = tokenResponse["viewed"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["viewed"]) : false;
-                 pelicula.favorite =tokenResponse["favorite"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["favorite"]) :false ;
-                 pelicula.paid_hd = Convert.ToBoolean((int)tokenResponse["paid_hd"]);
-                 pelicula.paid_sd = Convert.ToBoolean((int)tokenResponse["paid_sd"]);
-                 pelicula.id = (string)tokenResponse["id"];
-                 pelicula.ref_id = (int)tokenResponse["ref_id"];
-                 pelicula.type = (string)tokenResponse["type"];
-                 pelicula.color = (string)tokenResponse["color"];
-                 pelicula.price_sd = (decimal)tokenResponse["price_sd"];
-                 pelicula.price_hd = (decimal)tokenResponse["price_hd"];
-                 pelicula.available_in_hd = (int)tokenResponse["available_in_hd"];
-                 pelicula.subtitled = (int)tokenResponse["subtitled"];
-                 pelicula.available_for_mobiles = (string)tokenResponse["available_for_mobiles"] != null ? (int)tokenResponse["available_for_mobiles"] : 1;
-                 int rating = ((int)tokenResponse["ranking"] / 2) / 10;
-                 int resto = ((int)tokenResponse["ranking"] / 2) % 10;
-                 if (resto > 5)
-                     rating += 1;
-                 pelicula.ranking = rating;
-                 pelicula.duration = (int)tokenResponse["duration"];
-                 pelicula.classification = (string)tokenResponse["classification"];
-                 pelicula.status = (string)tokenResponse["status"];
-                 pelicula.default_language = (string)tokenResponse["default_language"];
-                 pelicula.status_user = (string)tokenResponse["status_user"];
-                 JToken thumbnail = tokenResponse["thumbnail"];
-                 pelicula.fanart.small = (string)thumbnail["small"];
-                 pelicula.fanart.large = (string)thumbnail["large"];
-                 pelicula.fanart.movil = (string)thumbnail["movil"];
-                 pelicula.fanart.hd = (string)thumbnail["hd"];
-                 pelicula.descripcion = (string)tokenResponse["short_description"];                 
-                 pelicula.descripcion = (string)tokenResponse["short_description"];
-                 foreach (string item in thumbnail["fanart"])
+                 if (tokenCount > 0)
                  {
-                     pelicula.fanart.fanart.Add(item);
-                 }             
-                 pelicula.fanart.crt = (string)thumbnail["crt"];
-                 pelicula.title = (string)tokenResponse["title"];
-                 pelicula.original_title = (string)tokenResponse["original_title"];
-                 pelicula.countries = (string)tokenResponse["countries"];
-                 var categorias = tokenResponse["categorie"];
-                 for (int i = 0; i < categorias.Count(); i++)
-                 {
-                     pelicula.categorie.Add((string)categorias[i]);
+                     JToken tokenResponse = objetoJson["response"];
+
+                     pelicula.viewed = tokenResponse["viewed"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["viewed"]) : false;
+                     pelicula.favorite = tokenResponse["favorite"].ToString() != string.Empty ? Convert.ToBoolean((int)tokenResponse["favorite"]) : false;
+                     pelicula.paid_hd = Convert.ToBoolean((int)tokenResponse["paid_hd"]);
+                     pelicula.paid_sd = Convert.ToBoolean((int)tokenResponse["paid_sd"]);
+                     pelicula.id = (string)tokenResponse["id"];
+                     pelicula.ref_id = (int)tokenResponse["ref_id"];
+                     pelicula.type = (string)tokenResponse["type"];
+                     pelicula.color = (string)tokenResponse["color"];
+                     pelicula.price_sd = (decimal)tokenResponse["price_sd"];
+                     pelicula.price_hd = (decimal)tokenResponse["price_hd"];
+                     pelicula.available_in_hd = (int)tokenResponse["available_in_hd"];
+                     pelicula.subtitled = (int)tokenResponse["subtitled"];
+                     pelicula.available_for_mobiles = (string)tokenResponse["available_for_mobiles"] != null ? (int)tokenResponse["available_for_mobiles"] : 1;
+                     int rating = ((int)tokenResponse["ranking"] / 2) / 10;
+                     int resto = ((int)tokenResponse["ranking"] / 2) % 10;
+                     if (resto > 5)
+                         rating += 1;
+                     pelicula.ranking = rating;
+                     pelicula.duration = (int)tokenResponse["duration"];
+                     pelicula.classification = (string)tokenResponse["classification"];
+                     pelicula.status = (string)tokenResponse["status"];
+                     pelicula.default_language = (string)tokenResponse["default_language"];
+                     pelicula.status_user = (string)tokenResponse["status_user"];
+                     JToken thumbnail = tokenResponse["thumbnail"];
+                     pelicula.fanart.small = (string)thumbnail["small"];
+                     pelicula.fanart.large = (string)thumbnail["large"];
+                     pelicula.fanart.movil = (string)thumbnail["movil"];
+                     pelicula.fanart.hd = (string)thumbnail["hd"];
+                     pelicula.descripcion = (string)tokenResponse["short_description"];
+                     pelicula.descripcion = (string)tokenResponse["short_description"];
+                     foreach (string item in thumbnail["fanart"])
+                     {
+                         pelicula.fanart.fanart.Add(item);
+                     }
+                     pelicula.fanart.crt = (string)thumbnail["crt"];
+                     pelicula.title = (string)tokenResponse["title"];
+                     pelicula.original_title = (string)tokenResponse["original_title"];
+                     pelicula.countries = (string)tokenResponse["countries"];
+                     var categorias = tokenResponse["categorie"];
+                     for (int i = 0; i < categorias.Count(); i++)
+                     {
+                         pelicula.categorie.Add((string)categorias[i]);
+                     }
+                     var genre = tokenResponse["genre"];
+                     for (int i = 0; i < genre.Count(); i++)
+                     {
+                         pelicula.Genre.Add((string)genre[i]);
+                     }
+
+                     var valoresinfo = tokenResponse["information"];
+                     for (int i = 0; i < valoresinfo.Count(); i++)
+                     {
+                         pelicula.information.Add(new Information((string)valoresinfo[i]["field_name"], (string)valoresinfo[i]["value"]));
+
+                     }
                  }
-                 var genre = tokenResponse["genre"];
-                 for (int i = 0; i < genre.Count(); i++)
-                 {
-                     pelicula.Genre.Add((string)genre[i]);
-                 }
-
-                  var valoresinfo = tokenResponse["information"];
-                for (int i=0;i<valoresinfo.Count();i++)
-                {
-                    pelicula.information.Add(new Information((string)valoresinfo[i]["field_name"], (string)valoresinfo[i]["value"]));
-
-                }                 
                  return pelicula;
 	        }
 	        catch (Exception ex)

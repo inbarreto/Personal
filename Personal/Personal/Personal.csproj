@@ -116,6 +116,12 @@
     <Compile Include="Model\JsonModel.cs" />
     <Compile Include="Model\PeliculaModel.cs" />
     <Compile Include="Model\StateModel.cs" />
+    <Compile Include="Views\Viendo.xaml.cs">
+      <DependentUpon>Viendo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vistas.xaml.cs">
+      <DependentUpon>Vistas.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Favoritos.xaml.cs">
       <DependentUpon>Favoritos.xaml</DependentUpon>
     </Compile>
@@ -144,12 +150,6 @@
     <Compile Include="Views\TerminosyCondiciones.xaml.cs">
       <DependentUpon>TerminosyCondiciones.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Viendo.xaml.cs">
-      <DependentUpon>Viendo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Vistas.xaml.cs">
-      <DependentUpon>Vistas.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -165,7 +165,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controles\PlayPelicula.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Controles\PublicitiesControl.xaml">
@@ -184,8 +183,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Viendo.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Vistas.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Favoritos.xaml">
-      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\FichaTecnica.xaml">
@@ -211,14 +215,6 @@
     <Page Include="Views\TerminosyCondiciones.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\Viendo.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Vistas.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

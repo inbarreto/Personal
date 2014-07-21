@@ -38,6 +38,7 @@ namespace Personal
         List<Generos> listaGeneros = new List<Generos>();
         Variables variables = new Variables();
         Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
+        private bool isLoaded =true;
 
         void Home_Loaded(object sender, RoutedEventArgs e)
         {
@@ -60,11 +61,12 @@ namespace Personal
                     StateModel.CargaKey("named_criteria", genero);
                     CargaPeliculasHome(usuario);
 
-                    
-                    ObtengoLasPublicities(usuario);
+                    if (isLoaded)
+                        ObtengoLasPublicities(usuario);
                     MenuJson postMenu = new MenuJson();
                     string postDataMenu = JsonConvert.SerializeObject(postMenu);
                     CargaMenusPost(postDataMenu, URL.Menus);
+                    isLoaded = false;
                 }
                 else
                 {
@@ -639,7 +641,6 @@ namespace Personal
         {
             try
             {
-
                 if (System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("Login"))
                     System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Remove("Login");
                 StateModel.BorrarKey("Usuario");

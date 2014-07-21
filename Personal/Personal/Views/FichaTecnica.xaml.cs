@@ -143,29 +143,28 @@ namespace Personal.Views
                 if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                 {
                     MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "Atención", MessageBoxButton.OK);
-                }
-            }
+                    BitmapImage imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/ver ahora-hover.png", UriKind.RelativeOrAbsolute));
+                    imgVerAhora.Source = imag;
 
-            BitmapImage imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/ver ahora-hover.png", UriKind.RelativeOrAbsolute));
-            imgVerAhora.Source = imag;
-
-            bool hayRed=NetworkInterface.GetIsNetworkAvailable();
-            if (hayRed)
-            {
-                PlayJson playJson = new PlayJson();
-                playJson.content_id = peliculaID;
-                playJson.session_id = usuario.session_id;
-                playJson.device_type = "windows_phone";
-                string jsonPostPlay = JsonConvert.SerializeObject(playJson);
-                CargaPlayPost(jsonPostPlay, URL.Play);
-            }
-            else
-            {
-                MessageBox.Show("Para poder ver la película necesita acceso a internet.");
-                imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/ver ahora-inactivo.png", UriKind.RelativeOrAbsolute));
-                imgVerAhora.Source = imag;
-            }
+                    bool hayRed = NetworkInterface.GetIsNetworkAvailable();
+                    if (hayRed)
+                    {
+                        PlayJson playJson = new PlayJson();
+                        playJson.content_id = peliculaID;
+                        playJson.session_id = usuario.session_id;
+                        playJson.device_type = "windows_phone";
+                        string jsonPostPlay = JsonConvert.SerializeObject(playJson);
+                        CargaPlayPost(jsonPostPlay, URL.Play);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Para poder ver la película necesita acceso a internet.");
+                        imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/ver ahora-inactivo.png", UriKind.RelativeOrAbsolute));
+                        imgVerAhora.Source = imag;
+                    }
             
+                }
+            }            
         }
 
         #region JsonLoad

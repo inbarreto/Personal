@@ -44,6 +44,10 @@
 
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
+        <TextBlock x:Name="txtResultado" 
+                    Text=""  FontFamily="Portable User Interface"
+                    TextWrapping="Wrap" FontSize="64" Margin="15,10" Visibility="Collapsed">
+        </TextBlock>
         <ListBox x:Name="listaPeliculas" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -93,5 +97,6 @@
                 </i:EventTrigger>
             </i:Interaction.Triggers>
         </Button>
+        
     </StackPanel>
 </UserControl>

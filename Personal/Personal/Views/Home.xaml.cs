@@ -22,6 +22,8 @@ using Personal.Domain.Enums;
 using Microsoft.Phone.Net.NetworkInformation;
 using Personal.Domain.Utils;
 using Microsoft.Phone.Tasks;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace Personal
 {   
@@ -32,14 +34,15 @@ namespace Personal
         public Home()
         {
             InitializeComponent();
-            this.Loaded += Home_Loaded;
+            this.Loaded += Home_Loaded;           
         }
         List<Pelicula> peliculaPrincipal = new List<Pelicula>();
         List<Generos> listaGeneros = new List<Generos>();
         Variables variables = new Variables();
         Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
         private bool isLoaded =true;
-
+        int indexImagenPrincipal = 0;
+        int cantidadPublicities = 0;
         void Home_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -78,6 +81,17 @@ namespace Personal
             {
                 throw;
             }
+        }
+
+        void timer_Tick(object sender, EventArgs e)
+        {
+
+            if (pivotImagenPrincipal.SelectedIndex < cantidadPublicities - 1)
+                pivotImagenPrincipal.SelectedIndex += 1;
+            else
+                pivotImagenPrincipal.SelectedIndex = 0;
+
+
         }
 
         private void CargaPeliculasHome(Usuario usuario)
@@ -370,7 +384,7 @@ namespace Personal
                 string postBuscarPeliculas = JsonConvert.SerializeObject(buscarJson);
                 controlBuscarPeliculas.CargaPeliculasPost(postBuscarPeliculas, URL.MenuCategoria);
                 StateModel.CargaKey("VieneDeBuscar", true);
-                txtResultado.Visibility = System.Windows.Visibility.Visible;
+               
             }
             catch (Exception)
             {
@@ -519,7 +533,8 @@ namespace Personal
                 publicitiesControl.DataContext = null;                                
                 listaPublicities = JsonModel.ConvierteJsonPublicities(response);                                
                 publicitiesControl.DataContext = listaPublicities[0];
-                pivotItem1.Content = publicitiesControl;                                            
+                pivotItem1.Content = publicitiesControl;
+                cantidadPublicities = listaPublicities.Count;                
                 int i = 0;
                 foreach (Publicities item in listaPublicities)
                 {
@@ -534,7 +549,13 @@ namespace Personal
                        
                     }
                     i++;
-                }            
+                }
+                DispatcherTimer timer = new DispatcherTimer();
+                timer.Interval = TimeSpan.FromSeconds(4);
+                timer.Tick += timer_Tick;
+                timer.Start();
+
+
             }
             catch (Exception )
             {
@@ -652,6 +673,28 @@ namespace Personal
                 throw;
             }
         }
+
+      
+        //private void song_MarkerReached(object sender, TimelineMarkerRoutedEventArgs e)
+        //{
+
+        //    //Name of the panorama is myPan
+            
+
+        //    //OR
+
+        //    pivotImagenPrincipal.SelectedIndex = 1;
+        //}
+
+        //private void song_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    //TimeSpan time = new TimeSpan();
+        //    //time = TimeSpan.Parse("00:00:03");
+
+        //    //song.Markers.Add(new TimelineMarker() { Time = TimeSpan.FromSeconds(5) });
+        //    //song.Play();
+
+        //}
 
     }
 }

@@ -27,6 +27,8 @@
             <!--<Image x:Name="imgVer" Source="../Imagenes/ver-transparente.png" Height="92" Width="81" Tag="{Binding id}" ></Image>-->            
             <TextBlock x:Name="txtNombrePelicula" Text="{Binding title}" Foreground="#FF856D84" Margin="20,0,0,0"  HorizontalAlignment="Left" FontSize="36" Grid.Row="1"/>    
             <TextBlock x:Name="txtContentid" Visibility="Collapsed" Tag="{Binding content_id}"></TextBlock>
+
+          
         </Grid>
     </StackPanel>
     

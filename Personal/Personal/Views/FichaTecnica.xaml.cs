@@ -43,7 +43,8 @@ namespace Personal.Views
             if (peliculaID.Length > 6)
                 peliculaJson.element_id = peliculaID;
             else
-                peliculaJson.ref_id = peliculaID;
+                peliculaJson.content_id = peliculaID;
+            
 
             peliculaJson.session_id = usuario != null ? usuario.session_id : string.Empty;
             
@@ -133,10 +134,10 @@ namespace Personal.Views
 
         private void imgVerAhora_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            if (usuario.session_id == null)
+            if (usuario == null || usuario.session_id ==string.Empty)
             {
                 NavigationService.Navigate(new Uri("/Views/Login.xaml", UriKind.Relative));
-                return;
+                
             }
             else
             {

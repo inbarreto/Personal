@@ -56,6 +56,11 @@
                                 <Controles:PublicitiesControl x:Name="controlPublicities" />                                    
                             </phone:PivotItem>                                                                                               
                             </phone:Pivot>
+                        <!--<MediaElement Visibility="Collapsed" x:Name="song" AutoPlay="False" MediaOpened="song_MediaOpened" MarkerReached="song_MarkerReached" Loaded="song_Loaded">
+                          
+                        </MediaElement>-->
+
+
                         <Controles:PeliculasPorGenero x:Name="peliculasHome"/>
                     </StackPanel>
                 </ScrollViewer>
@@ -97,10 +102,7 @@
         			</TextBox>
                         <Image x:Name="imgLupa" Source="/Imagenes/lupa.png" Height="55" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Margin="0,17,7,0" Tap="txtBuscar_Evento" Grid.ColumnSpan="2"/>
                     <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Grid.Row="1">
-                        <TextBlock x:Name="txtResultado" 
-                    Text="resultado"  FontFamily="Portable User Interface"
-                    TextWrapping="Wrap" FontSize="64" Margin="15,10" Visibility="Collapsed">
-                        </TextBlock>
+                      
                         <Controles:PeliculasPorGenero x:Name="controlBuscarPeliculas"></Controles:PeliculasPorGenero>
                     </StackPanel>
         		</Grid>

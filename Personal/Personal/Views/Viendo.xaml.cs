@@ -26,7 +26,7 @@ namespace Personal.Views
         {
             try
             {
-                StateModel.CargaKey("VieneDeBuscar", true);
+               
 
                 PeliculasPorGeneroJson peliPrincipal = new PeliculasPorGeneroJson();
                 peliPrincipal.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;

@@ -11,6 +11,7 @@ using Microsoft.Phone.Tasks;
 using Personal.JsonAccess.JsonClasses;
 using Personal.Model;
 using Personal.Domain.Entities;
+using System.Windows.Media;
 
 namespace Personal.Controles
 {
@@ -21,6 +22,7 @@ namespace Personal.Controles
             InitializeComponent();
         }
 
+      
         private void imgPeliculaPrincipal_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             if (txtContentid.Tag == null)

@@ -14,7 +14,7 @@ namespace Personal.JsonAccess
 
        public const string Menus = "http://www.video.personal.com.ar/business.php/json/menus";
        public const string MenuCategoria = "http://www.video.personal.com.ar/business.php/json/search";
-       
+       public const string Buy = "http://www.qubit.tv/business.php/json/buy";
        public const string Suscripcion = "http://secure.qubit.tv/json/personal/changeSuscription";
        public const string AddFavoritos = "http://www.video.personal.com.ar/business.php/json/AddToFavorites";
        public const string Play = "http://www.video.personal.com.ar/business.php/json/play";

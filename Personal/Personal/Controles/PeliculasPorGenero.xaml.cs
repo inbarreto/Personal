@@ -63,7 +63,19 @@ namespace Personal.Controles
                 //lista.Remove(peliculaUnica);
                 if (!StateModel.ExisteKey("VieneDeBuscar"))
                 {
-                    btnVerMas.Visibility = System.Windows.Visibility.Visible;                  
+                    btnVerMas.Visibility = System.Windows.Visibility.Visible;
+
+                }
+                else
+                {
+                    txtResultado.Visibility = System.Windows.Visibility.Visible;
+                    if (lista.Count == 0)
+                    {
+                        txtResultado.Text = "no se han encontrado resultados";
+                        txtResultado.FontSize = 44;
+                    }
+                    else
+                        txtResultado.Text = "resultados";
                 }
                 StateModel.BorrarKey("VieneDeBuscar");
                 listaPeliculas.ItemsSource = null;
@@ -117,25 +129,24 @@ namespace Personal.Controles
             Image img = sender as Image;
             string idPelicula = Convert.ToString(img.Tag);
             img.Source = PeliculaModel.BotonVer(true);
-
+            Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
             StateModel.CargaKey("idPelicula", idPelicula);
 
-            this.VerPelicula(img, idPelicula);
-            img.Source = PeliculaModel.BotonVer(false);
+            this.VerPelicula(idPelicula,usuario);
+            
         }
 
 
 
 
-        private void VerPelicula(Image imgVerAhora, string idPelicula)
+        private void VerPelicula(string idPelicula,Usuario usuario)
         {
 
             PeliculaJson peliculaJson = new PeliculaJson();
             peliculaJson.element_id = idPelicula;
-
+            peliculaJson.session_id =usuario.session_id;
             string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);           
             CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);           
-
         }
        
 
@@ -212,17 +223,19 @@ namespace Personal.Controles
             else
             {
                 Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
+                PeliculaModel peliculaModel = new PeliculaModel();
+                peliculaModel.SubscribePelicula(peliculaCargada, usuario.session_id);
+                
                 if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                 {
-                    MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OK); bool hayRed = NetworkInterface.GetIsNetworkAvailable();
+                    if (!peliculaCargada.paid_hd && ! peliculaCargada.paid_sd)
+                        MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OK); bool hayRed = NetworkInterface.GetIsNetworkAvailable();
                     if (hayRed)
                     {
                         PlayJson playJson = new PlayJson();
                         playJson.content_id = peliculaCargada.id;
                         playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
                         string jsonPostPlay = JsonConvert.SerializeObject(playJson);
-
-                        PeliculaModel peliculaModel = new PeliculaModel();
                         peliculaModel.EjecutaMultimediaPelicula(playJson);
                     }
                     else
@@ -288,11 +301,10 @@ namespace Personal.Controles
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
+
         private void TextBlockIrAFicha_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             try
@@ -305,7 +317,6 @@ namespace Personal.Controles
             {
                 throw;
             }
-
         }
 
 
@@ -342,7 +353,6 @@ namespace Personal.Controles
             
 
             imgFavoritos.Source = imag;
-
         }
 
         public void CargaFavoritoPost(string postdata, string url)

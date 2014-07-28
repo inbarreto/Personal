@@ -128,8 +128,38 @@ namespace Personal.Model
             //parse it
         }
 
-      
 
+        public void SubscribePelicula(Pelicula pelicula, string sessionid)
+        {
+            try
+            {
+                BuyJson buyjson = new BuyJson();
+                buyjson.element_id = pelicula.id;
+                buyjson.quality = pelicula.paid_sd == true ? "sd" :"hd" ;
+                buyjson.session_id = sessionid;
+
+                string query = JsonConvert.SerializeObject(buyjson);
+                this.EjecutaSubscribePelicula(query);
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }                    
+        }
+
+        private void EjecutaSubscribePelicula(string query)
+        {
+            JsonRequest loginRequest = new JsonRequest();
+            loginRequest.Completed += new EventHandler(handleResponseBuy);
+            loginRequest.beginRequest(query, URL.Buy);
+        }
+        private void handleResponseBuy(object sender, EventArgs args)
+        {
+            JsonRequest responseObject = sender as JsonRequest;
+            string response = responseObject.ResponseTxt;
+            
+            
+        }        
 
     /*    public static PeliculaListas CompletaPeliculaConJson(JToken token,bool esPelicula)
         {

@@ -14,15 +14,15 @@ namespace Personal.JsonAccess.JsonClasses
     public string device {get;set;}
     public string @operator {get;set;}
     public string session_id {get;set;}
-    public string ref_id { get; set; }
+    public string content_id { get; set; }
 
     public PeliculaJson()
         {
             element_id = string.Empty;
-            device = "windows_8";
+            device = "windows_phone";
             @operator = "qubit";
             session_id = string.Empty;
-            ref_id = string.Empty;
+            content_id = string.Empty;
         }
 
     }

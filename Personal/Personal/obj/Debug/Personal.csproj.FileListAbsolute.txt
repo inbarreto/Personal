@@ -111,3 +111,7 @@ E:\Proyects\personal\Personal\Personal\Bin\Debug\AppManifest.xaml
 E:\Proyects\personal\Personal\Personal\Bin\Debug\Properties\WMAppManifest.xml
 E:\Proyects\personal\Personal\Personal\Bin\Debug\Personal_Debug_AnyCPU.xap
 E:\Proyects\personal\Personal\Personal\obj\Debug\XapCacheFile.xml
+E:\Proyects\personal\Personal\Personal\obj\Debug\Controles\PlayPelicula.g.cs
+E:\Proyects\personal\Personal\Personal\obj\Debug\Views\Favoritos.g.cs
+E:\Proyects\personal\Personal\Personal\obj\Debug\Views\Vistas.g.cs
+E:\Proyects\personal\Personal\Personal\obj\Debug\Views\Viendo.g.cs

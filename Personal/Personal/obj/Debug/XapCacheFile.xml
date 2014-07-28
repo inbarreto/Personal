@@ -1,6 +1,6 @@
-﻿<xapCache source="E:\Proyects\personal\Personal\Personal\Bin\Debug\Personal_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="14/06/2014 01:56:44 p.m.">
-  <file source="E:\Proyects\personal\Personal\Personal\obj\Debug\Personal.dll" archivePath="Personal.dll" lastWriteTime="14/06/2014 01:53:18 p.m." />
-  <file source="E:\Proyects\personal\Personal\Personal\obj\Debug\es-AR\Personal.resources.dll" archivePath="es-AR\Personal.resources.dll" lastWriteTime="14/06/2014 01:53:18 p.m." />
+﻿<xapCache source="E:\Proyects\personal\Personal\Personal\Bin\Debug\Personal_Debug_AnyCPU.xap" wasSigned="False" wasTritonized="False" certificateThumbprint="" TimeStampUrl="" signKeyFile="" signKeyPassword="" lastWriteTime="28/07/2014 02:07:21 a.m.">
+  <file source="E:\Proyects\personal\Personal\Personal\obj\Debug\Personal.dll" archivePath="Personal.dll" lastWriteTime="28/07/2014 02:07:19 a.m." />
+  <file source="E:\Proyects\personal\Personal\Personal\obj\Debug\es-AR\Personal.resources.dll" archivePath="es-AR\Personal.resources.dll" lastWriteTime="28/07/2014 02:07:19 a.m." />
   <file source="E:\Proyects\personal\Personal\Personal\Assets\AlignmentGrid.png" archivePath="Assets\AlignmentGrid.png" lastWriteTime="14/06/2014 11:13:09 a.m." />
   <file source="E:\Proyects\personal\Personal\Personal\Assets\Tiles\FlipCycleTileLarge.png" archivePath="Assets\Tiles\FlipCycleTileLarge.png" lastWriteTime="14/06/2014 01:47:18 p.m." />
   <file source="E:\Proyects\personal\Personal\Personal\Assets\Tiles\FlipCycleTileSmall.png" archivePath="Assets\Tiles\FlipCycleTileSmall.png" lastWriteTime="14/06/2014 01:47:18 p.m." />
@@ -53,9 +53,9 @@
   <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v8.0\Libraries\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="01/01/2013 06:57:00 p.m." />
   <file source="E:\Proyects\personal\Personal\packages\WPtoolkit.4.2013.08.16\lib\wp8\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="14/06/2014 11:13:06 a.m." />
   <file source="E:\Proyects\personal\Personal\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.dll" archivePath="Newtonsoft.Json.dll" lastWriteTime="14/06/2014 11:13:02 a.m." />
-  <file source="E:\Proyects\personal\Personal\Personal.Domain\Bin\Debug\Personal.Domain.dll" archivePath="Personal.Domain.dll" lastWriteTime="14/06/2014 01:53:17 p.m." />
-  <file source="E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.dll" archivePath="Personal.JsonAccess.dll" lastWriteTime="14/06/2014 01:47:32 p.m." />
+  <file source="E:\Proyects\personal\Personal\Personal.Domain\Bin\Debug\Personal.Domain.dll" archivePath="Personal.Domain.dll" lastWriteTime="21/07/2014 12:45:27 a.m." />
+  <file source="E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.dll" archivePath="Personal.JsonAccess.dll" lastWriteTime="28/07/2014 02:07:17 a.m." />
   <file source="C:\Program Files (x86)\Microsoft SDKs\Expression\Blend\Windows Phone\v8.0\Libraries\System.Windows.Interactivity.dll" archivePath="System.Windows.Interactivity.dll" lastWriteTime="25/09/2012 01:41:02 a.m." />
-  <file source="E:\Proyects\personal\Personal\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.xml" archivePath="Newtonsoft.Json.xml" lastWriteTime="14/06/2014 11:13:00 a.m." />
+  <file source="E:\Proyects\personal\Personal\packages\Newtonsoft.Json.6.0.2\lib\portable-net45+wp80+win8+wpa81\Newtonsoft.Json.xml" archivePath="Newtonsoft.Json.xml" lastWriteTime="28/07/2014 02:06:54 a.m." />
   <file source="E:\Proyects\personal\Personal\Personal\Bin\Debug\Properties\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="14/06/2014 01:54:08 p.m." />
 </xapCache>

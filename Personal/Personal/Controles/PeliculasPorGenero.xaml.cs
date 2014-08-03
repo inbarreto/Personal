@@ -33,6 +33,7 @@ namespace Personal.Controles
         Variables variables = new Variables();
         List<Pelicula> listadoDePeliculas ;
         Usuario usuario = new Usuario();
+        bool semaforo = true;
         
         void PeliculasGenero_Loaded(object sender, RoutedEventArgs e)
         {
@@ -126,13 +127,27 @@ namespace Personal.Controles
 
         private void imgVer_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            Image img = sender as Image;
-            string idPelicula = Convert.ToString(img.Tag);
-            img.Source = PeliculaModel.BotonVer(true);
-            Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
-            StateModel.CargaKey("idPelicula", idPelicula);
 
-            this.VerPelicula(idPelicula,usuario);
+            if (semaforo)
+            {
+                Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
+                if (usuario == null)
+                {
+                    MessageBox.Show("debe iniciar sesion para ver una pelicula", "error", MessageBoxButton.OK);
+                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    semaforo = false;
+                    Image img = sender as Image;
+                    string idPelicula = Convert.ToString(img.Tag);
+                    img.Source = PeliculaModel.BotonVer(true);
+
+                    StateModel.CargaKey("idPelicula", idPelicula);
+
+                    this.VerPelicula(idPelicula, usuario);
+                }
+            }
             
         }
 
@@ -216,12 +231,13 @@ namespace Personal.Controles
         public void CargaPeliculaObjetoConJson(string jsonPelicula)
         {
             Pelicula peliculaCargada = JsonModel.ConvierteJsonAPelicula(jsonPelicula);
-            if (!StateModel.ExisteKey("Usuario"))
-            {
-                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
-            }
-            else
-            {
+            semaforo = true;
+            //if (!StateModel.ExisteKey("Usuario"))
+            //{
+            //    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
+            //}
+            //else
+            //{
                 Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
                 PeliculaModel peliculaModel = new PeliculaModel();
                 peliculaModel.SubscribePelicula(peliculaCargada, usuario.session_id);
@@ -243,7 +259,7 @@ namespace Personal.Controles
                         MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
                     }
                 }               
-            }
+            //}
         }
 
         //public void CargaPlayPost(string postdata, string url)

@@ -43,6 +43,7 @@ namespace Personal
         private bool isLoaded =true;
         int indexImagenPrincipal = 0;
         int cantidadPublicities = 0;
+        DispatcherTimer timer = new DispatcherTimer();
         void Home_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -301,11 +302,11 @@ namespace Personal
                         
                         if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                         {
-                            txtSuscripcion.Text = "activar suscripción";
+                            txtSuscripcion.Text = "desactivar suscripción";
                         }
                         else if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Desactivar).ToString())
                         {
-                            txtSuscripcion.Text = "desactivar suscripción";
+                            txtSuscripcion.Text = "activar suscripción";
                         }
                     }
                     break;
@@ -470,7 +471,7 @@ namespace Personal
                   if (usuario == null)
                   {
                       MessageBox.Show("Primero tenés que iniciar sesion.", "error", MessageBoxButton.OK);
-                      return;
+                      
                 }
                   else
                   {
@@ -478,13 +479,13 @@ namespace Personal
                       
                   }
                   bool hayRed = NetworkInterface.GetIsNetworkAvailable();
-                  if (hayRed)
+                  if (hayRed && usuario != null)
                   {
                  
                       string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);
                       PlayJson playJson = new PlayJson();
                       playJson.content_id = peliculaPrincipal[0].id;
-                      playJson.session_id = usuario.session_id;
+                      playJson.session_id = usuario != null ? usuario.session_id : string.Empty ;
                       string jsonPostPlay = JsonConvert.SerializeObject(playJson);
 
                       PeliculaModel peliculaModel = new PeliculaModel();
@@ -550,11 +551,11 @@ namespace Personal
                     }
                     i++;
                 }
-                DispatcherTimer timer = new DispatcherTimer();
+                
                 timer.Interval = TimeSpan.FromSeconds(4);
                 timer.Tick += timer_Tick;
                 timer.Start();
-
+                
 
             }
             catch (Exception )
@@ -582,6 +583,8 @@ namespace Personal
                 string jsonSuscripcion = JsonConvert.SerializeObject(suscripcionJson);
 
                 this.CargaSuscripcionPost(jsonSuscripcion, URL.Suscripcion);
+
+                pivotHome.SelectedIndex = 0;
             }
             catch (Exception )
             {
@@ -674,27 +677,19 @@ namespace Personal
             }
         }
 
-      
-        //private void song_MarkerReached(object sender, TimelineMarkerRoutedEventArgs e)
-        //{
-
-        //    //Name of the panorama is myPan
+        private void pivotImagenPrincipal_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                timer.Stop();
+                timer.Start();
+            }
+            catch (Exception ex)
+            {                
+                throw ex;
+            }
             
-
-        //    //OR
-
-        //    pivotImagenPrincipal.SelectedIndex = 1;
-        //}
-
-        //private void song_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    //TimeSpan time = new TimeSpan();
-        //    //time = TimeSpan.Parse("00:00:03");
-
-        //    //song.Markers.Add(new TimelineMarker() { Time = TimeSpan.FromSeconds(5) });
-        //    //song.Play();
-
-        //}
-
+        }
+              
     }
 }

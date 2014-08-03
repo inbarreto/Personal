@@ -135,7 +135,7 @@ namespace Personal.Model
             {
                 BuyJson buyjson = new BuyJson();
                 buyjson.element_id = pelicula.id;
-                buyjson.quality = pelicula.paid_sd == true ? "sd" :"hd" ;
+                buyjson.quality = "SD";
                 buyjson.session_id = sessionid;
 
                 string query = JsonConvert.SerializeObject(buyjson);

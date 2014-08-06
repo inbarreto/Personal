@@ -17,6 +17,8 @@ namespace Personal.Model
 {
     public  class PeliculaModel
     {
+        public event EventHandler ShowEvent;
+
         public static PeliculaListas CompletaPeliculaConJson(JToken token)
         {
             try
@@ -91,6 +93,8 @@ namespace Personal.Model
                 mediaPlayerLauncher.Orientation = MediaPlayerOrientation.Landscape;
 
                 mediaPlayerLauncher.Show();
+                Boolean showEvent = true;
+                ShowEvent(showEvent,EventArgs.Empty);
 
             }
             catch (Exception)

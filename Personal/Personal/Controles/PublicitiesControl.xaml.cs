@@ -27,9 +27,19 @@ namespace Personal.Controles
         {
             if (txtContentid.Tag == null)
             {
-                WebBrowserTask webBrowserTask = new WebBrowserTask();
-                webBrowserTask.Uri = new Uri(imgPeliculaPrincipal.Tag.ToString());
-                webBrowserTask.Show();
+                if (txtNombrePelicula.Text == "Suscripción")
+                {
+                    //(Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Home.xaml", UriKind.Relative));
+                }
+                else
+                {
+                    if (imgPeliculaPrincipal.Tag != null)
+                    {
+                        WebBrowserTask webBrowserTask = new WebBrowserTask();
+                        webBrowserTask.Uri = new Uri(imgPeliculaPrincipal.Tag.ToString());
+                        webBrowserTask.Show();
+                    }
+                }
             }
             else
             {

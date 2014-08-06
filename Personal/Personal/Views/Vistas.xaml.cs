@@ -25,14 +25,12 @@ namespace Personal.Views
         {
             try
             {
-                
-
                 PeliculasPorGeneroJson peliPrincipal = new PeliculasPorGeneroJson();
                 peliPrincipal.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
                 peliPrincipal.named_criteria = "visto";
                 string post_dataPeliculas = JsonConvert.SerializeObject(peliPrincipal);
 
-                peliculasVistas.CargaPeliculasPost(post_dataPeliculas, Personal.JsonAccess.URL.MenuCategoria);
+                peliculasVistas.CargaPeliculasPost(post_dataPeliculas, "http://www.video.personal.com.ar/business.php/json/search");
 
 
             }

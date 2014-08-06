@@ -116,7 +116,7 @@ namespace Personal
         {
             PublicitiesJson publi = new PublicitiesJson();
             publi.session_id = usuario != null ? usuario.session_id : string.Empty;
-            publi.device = "PC";
+            publi.device = "windows_phone";
             string jsonPublicities = JsonConvert.SerializeObject(publi);
             CargaPublicitiesPost(jsonPublicities, URL.Publicities);
         }
@@ -303,10 +303,12 @@ namespace Personal
                         if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
                         {
                             txtSuscripcion.Text = "desactivar suscripción";
+                            txtSuscripcion.FontWeight = System.Windows.FontWeights.Normal;
                         }
                         else if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Desactivar).ToString())
                         {
                             txtSuscripcion.Text = "activar suscripción";
+                            txtSuscripcion.FontWeight = System.Windows.FontWeights.Bold;
                         }
                     }
                     break;
@@ -610,12 +612,14 @@ namespace Personal
             if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Desactivar).ToString())
             {
                 //MessageBox.Show("suscripción satisfactoria.", "OK", MessageBoxButton.OK);
+                txtSuscripcion.FontWeight = System.Windows.FontWeights.Normal;
                 txtSuscripcion.Text = "desactivar suscripción";
             }
             else if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
             {
                 //MessageBox.Show("desuscripción satisfactoria.", "OK", MessageBoxButton.OK);
                 txtSuscripcion.Text = "activar suscripción";
+                txtSuscripcion.FontWeight = System.Windows.FontWeights.Bold;
             }
             //parse it
         }
@@ -689,6 +693,11 @@ namespace Personal
                 throw ex;
             }
             
+        }
+
+        private void Busqueda_Finalizada(object sender, SizeChangedEventArgs e)
+        {
+            progressBarBusqueda.Visibility = System.Windows.Visibility.Collapsed;
         }
               
     }

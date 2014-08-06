@@ -17,7 +17,7 @@
 
         <ResourceDictionary Source="../Styles/StylePeliculasPorGeneroGenero.xaml"></ResourceDictionary>
 
-    </UserControl.Resources>       
+    </UserControl.Resources>
     <StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="BotonVer">
@@ -48,55 +48,50 @@
                     Text=""  FontFamily="Portable User Interface"
                     TextWrapping="Wrap" FontSize="64" Margin="15,10" Visibility="Collapsed">
         </TextBlock>
+        <ProgressBar x:Name="progressBarListaTotal" Value="0" Foreground="#5B5B5B" IsIndeterminate="True" Height="50" SmallChange=".5" LargeChange="10" Visibility="Collapsed"></ProgressBar>
         <ListBox x:Name="listaPeliculas" Height="Auto" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+
                     <StackPanel Orientation="Horizontal">
-                    
-                    <Image x:Name="imgPelicula" Source="{Binding fanart.small}" Style="{StaticResource pelicula}" Margin="20,15,0,0" HorizontalAlignment="Left" Tap="ImagenIrAFicha_Tap" Tag="{Binding id}" ></Image>
-                    <Canvas Style="{StaticResource canvas}" Grid.Column="1">
-                        <TextBlock x:Name="txtTitle" Text="{Binding title}" FontFamily="Portable User Interface" Width="300" Foreground="#5B5B5B"  FontSize="28" Canvas.Left="14" Canvas.Top="40"  TextWrapping="Wrap" Tap="TextBlockIrAFicha_Tap" Tag="{Binding id}">
-                        </TextBlock>
-                        <Grid x:Name="gridRating" Background="Transparent" Height="30" Width="150" Canvas.Top="70" Canvas.Left="10" Tag="{Binding ranking}" Loaded="gridRating_Loaded">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="30"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="30" />
-                                <ColumnDefinition Width="30" />
-                            </Grid.ColumnDefinitions>
-                            <Image  x:Name="estrella1" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="0"></Image>
-                            <Image  x:Name="estrella2" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="1"></Image>
-                            <Image  x:Name="estrella3" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="2"></Image>
-                            <Image  x:Name="estrella4" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="3"></Image>
-                            <Image  x:Name="estrella5" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="4"></Image>
-                        </Grid>
-                        <Image x:Name="imgFavorito" Source="../Imagenes/fav.png" Style="{StaticResource Iconos2}"     Canvas.Top="95"  Canvas.Left="230" Tap="imgFavorito_Tap" Loaded="imgFavorito_Loaded" Tag="{Binding id}"></Image>
-                        <Image x:Name="imgMas"  Source="../Imagenes/mas.png"   Style="{StaticResource Iconos2}"   Canvas.Top="160" Canvas.Left="230" Tap="ImagenIrAFicha_Tap" Tag="{Binding id}" ></Image>
-                        <Image x:Name="imgVer" Source="../Imagenes/ver-inactivo.png" Style="{StaticResource imagenVer}" Canvas.Top="120" Canvas.Left="14" Tap="imgVer_Tap" Tag="{Binding id}" DoubleTap="imgVer_DoubleTap"></Image>
-                    </Canvas>
-                    <Line  X1="20" Y1="0" X2="444" Y2="0" Grid.ColumnSpan="2" 
+
+                        <Image x:Name="imgPelicula" Source="{Binding fanart.small}" Style="{StaticResource pelicula}" Margin="20,15,0,0" HorizontalAlignment="Left" Tap="ImagenIrAFicha_Tap" Tag="{Binding id}" ></Image>
+                        <Canvas Style="{StaticResource canvas}" Grid.Column="1">
+                            <TextBlock x:Name="txtTitle" Text="{Binding title}" FontFamily="Portable User Interface" Width="300" Foreground="#5B5B5B"  FontSize="28" Canvas.Left="14" Canvas.Top="40"  TextWrapping="Wrap" Tap="TextBlockIrAFicha_Tap" Tag="{Binding id}">
+                            </TextBlock>
+                            <Grid x:Name="gridRating" Background="Transparent" Height="30" Width="150" Canvas.Top="70" Canvas.Left="10" Tag="{Binding ranking}" Loaded="gridRating_Loaded">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                    <ColumnDefinition Width="30" />
+                                </Grid.ColumnDefinitions>
+                                <Image  x:Name="estrella1" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="0"></Image>
+                                <Image  x:Name="estrella2" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="1"></Image>
+                                <Image  x:Name="estrella3" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="2"></Image>
+                                <Image  x:Name="estrella4" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="3"></Image>
+                                <Image  x:Name="estrella5" Source="../Imagenes/Rating/estrella_inactiva.png" Grid.Column="4"></Image>
+                            </Grid>
+                            <Image x:Name="imgFavorito" Source="../Imagenes/fav.png" Style="{StaticResource Iconos2}"     Canvas.Top="95"  Canvas.Left="230" Tap="imgFavorito_Tap" Loaded="imgFavorito_Loaded" Tag="{Binding id}"></Image>
+                            <Image x:Name="imgMas"  Source="../Imagenes/mas.png"   Style="{StaticResource Iconos2}"   Canvas.Top="160" Canvas.Left="230" Tap="ImagenIrAFicha_Tap" Tag="{Binding id}" ></Image>
+                            <Image x:Name="imgVer" Source="../Imagenes/ver-inactivo.png" Style="{StaticResource imagenVer}" Canvas.Top="120" Canvas.Left="14" Tap="imgVer_Tap" Tag="{Binding id}" DoubleTap="imgVer_DoubleTap"></Image>
+                        </Canvas>
+                        <Line  X1="20" Y1="0" X2="444" Y2="0" Grid.ColumnSpan="2" 
                           VerticalAlignment="Bottom" Stroke="#F4F4F4" 
                           StrokeThickness="4" Height="4"/>
-                    
-                </StackPanel>
-                
-            </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
 
-        <Button x:Name="btnVerMas" Content="ver más" Tap="verMas_Tap"  Visibility="Collapsed" Height="70" Foreground="#7E517A" BorderBrush="#7E517A">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Tap">
-                    <ec:GoToStateAction StateName="VisualState1" UseTransitions="True" />
-                
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Button>
-        
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Button x:Name="btnVerMas" Content="ver más" Tap="verMas_Tap"  Visibility="Collapsed" Height="70" Foreground="#7E517A" BorderBrush="#7E517A"></Button>
+        <ProgressBar x:Name="progressBarLista" Value="0" IsIndeterminate="True" Height="50" SmallChange=".5" LargeChange="10" Visibility="Collapsed"></ProgressBar>
+
     </StackPanel>
 </UserControl>

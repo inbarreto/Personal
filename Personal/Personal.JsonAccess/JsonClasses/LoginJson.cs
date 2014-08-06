@@ -22,7 +22,7 @@ namespace Personal.JsonAccess.JsonClasses
             username=string.Empty;
             password = string.Empty;
             @operator = "qubit";
-            device_type="windows_8";
+            device_type="windows_phone";
             device_id=string.Empty;
 
         }            

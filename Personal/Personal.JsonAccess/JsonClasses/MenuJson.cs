@@ -13,7 +13,7 @@ namespace Personal.JsonAccess.JsonClasses
 
         public MenuJson()
         {
-            device ="windows_8";
+            device ="windows_phone";
             name = string.Empty;
 
         }

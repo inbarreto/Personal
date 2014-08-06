@@ -15,6 +15,7 @@ namespace Personal.JsonAccess.JsonClasses
     public string @operator {get;set;}
     public string session_id {get;set;}
     public string content_id { get; set; }
+    public string ref_id { get; set; }
 
     public PeliculaJson()
         {

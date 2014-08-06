@@ -43,7 +43,6 @@
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="White">
- 
         <phone:Pivot x:Name="pivotHome" Title=""  Background="white" Foreground="#7E517A" SelectionChanged="pivotHome_SelectionChanged">
             <phone:PivotItem x:Name="pivItemPersonalVideo" Background="White" Margin="10,10,0,0" >
                 <phone:PivotItem.Header>
@@ -60,8 +59,7 @@
                           
                         </MediaElement>-->
 
-
-                        <Controles:PeliculasPorGenero x:Name="peliculasHome"/>
+                        <Controles:PeliculasPorGenero x:Name="peliculasHome" />
                     </StackPanel>
                 </ScrollViewer>
 
@@ -102,8 +100,8 @@
         			</TextBox>
                         <Image x:Name="imgLupa" Source="/Imagenes/lupa.png" Height="55" Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Margin="0,17,7,0" Tap="txtBuscar_Evento" Grid.ColumnSpan="2"/>
                     <StackPanel Orientation="Vertical" Grid.ColumnSpan="2" Grid.Row="1">
-                      
-                        <Controles:PeliculasPorGenero x:Name="controlBuscarPeliculas"></Controles:PeliculasPorGenero>
+                            <ProgressBar x:Name="progressBarBusqueda" Value="0" IsIndeterminate="True" Height="50" SmallChange=".5" LargeChange="10" Visibility="Collapsed"></ProgressBar>
+                            <Controles:PeliculasPorGenero x:Name="controlBuscarPeliculas" SizeChanged="Busqueda_Finalizada"></Controles:PeliculasPorGenero>
                     </StackPanel>
         		</Grid>
                 </ScrollViewer>
@@ -141,7 +139,7 @@
                         <TextBlock Text="entretenimiento y más" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtEntretenimiento_Tap"/>
                         <TextBlock Text="más apps" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtMasApps_Tap"/>
                         <TextBlock Text="términos y condiciones" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtTyC_Tap"/>
-                        <TextBlock  x:Name="txtLogOut"  Text="log out" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtLogOut_Tap"/>
+                        <TextBlock  x:Name="txtLogOut"  Text="cerrar sesión" FontFamily="Portable User Interface" Foreground="#FF856D84" Margin="15,3,0,10" FontSize="36" Tap="txtLogOut_Tap"/>
                     </ListBox>
                
                 </StackPanel>

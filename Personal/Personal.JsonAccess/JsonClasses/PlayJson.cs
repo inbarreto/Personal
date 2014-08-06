@@ -18,7 +18,7 @@ namespace Personal.JsonAccess.JsonClasses
         public PlayJson()
         {
             quality = "sd";
-            device_type = "windows_8";
+            device_type = "windows_phone";
             session_id = string.Empty;
             content_id = string.Empty;
         }

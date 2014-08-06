@@ -2,3 +2,7 @@ E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.
 E:\Proyects\personal\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.pdb
 E:\Proyects\personal\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.dll
 E:\Proyects\personal\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.pdb
+C:\Users\Juan\Documents\SVNs\Qubit Windows Phone\Desarrollo\trunk\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.dll
+C:\Users\Juan\Documents\SVNs\Qubit Windows Phone\Desarrollo\trunk\Personal\Personal.JsonAccess\Bin\Debug\Personal.JsonAccess.pdb
+C:\Users\Juan\Documents\SVNs\Qubit Windows Phone\Desarrollo\trunk\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.dll
+C:\Users\Juan\Documents\SVNs\Qubit Windows Phone\Desarrollo\trunk\Personal\Personal.JsonAccess\obj\Debug\Personal.JsonAccess.pdb

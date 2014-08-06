@@ -17,7 +17,7 @@ namespace Personal.JsonAccess.JsonClasses
        public BuscarJson()
            {
                 session_id = string.Empty;
-           device = "windows_8";
+           device = "windows_phone";
            @operator ="qubit";
            text =string.Empty;                    
                 }
@@ -25,7 +25,7 @@ namespace Personal.JsonAccess.JsonClasses
        public BuscarJson(string session, string buscar)
        {
            session_id = session;
-           device = "windows_8";
+           device = "windows_phone";
            @operator = "qubit";
            text = buscar;                           
        }

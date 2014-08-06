@@ -92,6 +92,7 @@ namespace Personal.Views
                 LoginJson loginJsonPost = new LoginJson();
                 loginJsonPost.password = password;
                 loginJsonPost.username = numeroTelefono;
+                loginJsonPost.device_type = "windows_phone";
                 string postUsuario = JsonConvert.SerializeObject(loginJsonPost);                
                 CargaUsuarioPost(postUsuario, URL.Login);                
             }

@@ -23,7 +23,7 @@ namespace Personal.JsonAccess.JsonClasses
             session_id=string.Empty;
             page = 1.ToString();
             page_size=6.ToString();
-            device="windows_8";
+            device="windows_phone";
             @operator ="qubit";
             named_criteria=string.Empty;        
         }

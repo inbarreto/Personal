@@ -37,19 +37,25 @@ namespace Personal.Views
             peliculaID = StateModel.ObtieneKey("idPelicula").ToString();
 
             usuario = StateModel.ObtieneKey("Usuario") as Usuario;
-            
-            PeliculaJson peliculaJson = new PeliculaJson();
 
             if (peliculaID.Length > 6)
+            {
+                PeliculaJson peliculaJson = new PeliculaJson();
                 peliculaJson.element_id = peliculaID;
-            else
-                peliculaJson.content_id = peliculaID;
-            
+                peliculaJson.session_id = usuario != null ? usuario.session_id : string.Empty;
 
-            peliculaJson.session_id = usuario != null ? usuario.session_id : string.Empty;
-            
-            string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);            
-            CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);
+                string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);
+                CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);
+            }
+            else
+            {
+                PeliculaPublicitiesJson peliculaJson = new PeliculaPublicitiesJson();
+                peliculaJson.ref_id = peliculaID;
+                peliculaJson.session_id = usuario != null ? usuario.session_id : string.Empty;
+
+                string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);
+                CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);
+            }
         }
 
         public void CargaPeliculaObjetoConJson(string jsonPelicula)
@@ -186,6 +192,12 @@ namespace Personal.Views
 
         public void CargaPlayPost(string postdata, string url)
         {
+            progressBarVer.Visibility = System.Windows.Visibility.Visible;
+            progressBarVerImg.Visibility = System.Windows.Visibility.Visible;
+            imgVerAhora.Visibility = System.Windows.Visibility.Collapsed;
+            imgVer.Visibility = System.Windows.Visibility.Collapsed;
+            BitmapImage imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/ver ahora-inactivo.png", UriKind.RelativeOrAbsolute));
+            imgVerAhora.Source = imag;
             JsonRequest loginRequest = new JsonRequest();
             loginRequest.Completed += new EventHandler(handleResponsePlay);
             loginRequest.beginRequest(postdata, url);
@@ -202,6 +214,10 @@ namespace Personal.Views
         {
             try
             {
+                progressBarVer.Visibility = System.Windows.Visibility.Collapsed;
+                progressBarVerImg.Visibility = System.Windows.Visibility.Collapsed;
+                imgVerAhora.Visibility = System.Windows.Visibility.Visible;
+                imgVer.Visibility = System.Windows.Visibility.Visible;
                 Play play = JsonModel.ConvierteJsonPlay(jsonString);                
                 MediaPlayerLauncher mediaPlayerLauncher = new MediaPlayerLauncher();
                 mediaPlayerLauncher.Media = new Uri(play.direct_url, UriKind.Absolute);

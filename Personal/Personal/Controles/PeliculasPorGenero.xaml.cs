@@ -31,15 +31,14 @@ namespace Personal.Controles
             this.Loaded += PeliculasGenero_Loaded;
         }
         Variables variables = new Variables();
-        List<Pelicula> listadoDePeliculas ;
+        List<Pelicula> listadoDePeliculas;
         Usuario usuario = new Usuario();
-        bool semaforo = true;
-        
+
         void PeliculasGenero_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-                
+
             }
             catch (Exception)
             {
@@ -52,7 +51,7 @@ namespace Personal.Controles
         {
             try
             {
-                
+
                 // SE MODIFICO SEGUN EL REQUERIMIENTO QUE NO ES UNA PELICULA LA PRIMERA.
                 List<Pelicula> lista = this.ObtenerPrevioPorGenero(json, cantidadPeliculas);
                 //Pelicula peliculaUnica = lista.First<Pelicula>();
@@ -80,7 +79,11 @@ namespace Personal.Controles
                 }
                 StateModel.BorrarKey("VieneDeBuscar");
                 listaPeliculas.ItemsSource = null;
-                listaPeliculas.ItemsSource = lista;                            
+                listaPeliculas.ItemsSource = lista;
+
+                progressBarLista.Visibility = System.Windows.Visibility.Collapsed;
+                progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
+
             }
             catch (Exception)
             {
@@ -127,43 +130,36 @@ namespace Personal.Controles
 
         private void imgVer_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-
-            if (semaforo)
-            {
-                Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
-                if (usuario == null)
-                {
-                    MessageBox.Show("debe iniciar sesion para ver una pelicula", "error", MessageBoxButton.OK);
-                    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
-                }
-                else
-                {
-                    semaforo = false;
-                    Image img = sender as Image;
-                    string idPelicula = Convert.ToString(img.Tag);
-                    img.Source = PeliculaModel.BotonVer(true);
-
-                    StateModel.CargaKey("idPelicula", idPelicula);
-
-                    this.VerPelicula(idPelicula, usuario);
-                }
-            }
-            
+            Image img = sender as Image;
+            string idPelicula = Convert.ToString(img.Tag);
+            //img.Source = PeliculaModel.BotonVer(true);
+            Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
+            StateModel.CargaKey("idPelicula", idPelicula);
+            this.VerPelicula(idPelicula, usuario);
         }
 
 
 
 
-        private void VerPelicula(string idPelicula,Usuario usuario)
+        private void VerPelicula(string idPelicula, Usuario usuario)
         {
-
-            PeliculaJson peliculaJson = new PeliculaJson();
-            peliculaJson.element_id = idPelicula;
-            peliculaJson.session_id =usuario.session_id;
-            string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);           
-            CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);           
+            if (usuario != null)
+            {
+                progressBarListaTotal.Visibility = System.Windows.Visibility.Visible;
+                listaPeliculas.Visibility = System.Windows.Visibility.Collapsed;
+                btnVerMas.Visibility = System.Windows.Visibility.Collapsed;
+                PeliculaJson peliculaJson = new PeliculaJson();
+                peliculaJson.element_id = idPelicula;
+                peliculaJson.session_id = usuario.session_id;
+                string postJsonPelicula = JsonConvert.SerializeObject(peliculaJson);
+                CargaDatosPeliculaPost(postJsonPelicula, URL.ElementPelicula);
+            }
+            else
+            {
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
+            }
         }
-       
+
 
         private void imgFavorito_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
@@ -197,11 +193,12 @@ namespace Personal.Controles
                         favoritos.session_id = usuario.session_id;
                         string jsonFavoritos = JsonConvert.SerializeObject(favoritos);
 
-                        this.CargaFavoritoPost(jsonFavoritos, URL.AddFavoritos);                        
+                        this.CargaFavoritoPost(jsonFavoritos, URL.AddFavoritos);
                     }
                 }
-                else {
-                    MessageBox.Show("Para poder agregar a favoritos debe estar logeado", "error", MessageBoxButton.OK);
+                else
+                {
+                    MessageBox.Show("Para poder agregar a favoritos debe estar logueado", "error", MessageBoxButton.OK);
                 }
 
 
@@ -219,6 +216,10 @@ namespace Personal.Controles
             JsonRequest PeliculaRequest = new JsonRequest();
             PeliculaRequest.Completed += new EventHandler(handleResponsePeliculasLista);
             PeliculaRequest.beginRequest(postdata, url);
+            if (progressBarLista.Visibility != System.Windows.Visibility.Visible)
+            {
+                progressBarListaTotal.Visibility = System.Windows.Visibility.Visible;
+            }
         }
         public void handleResponsePeliculasLista(object sender, EventArgs args)
         {
@@ -231,35 +232,85 @@ namespace Personal.Controles
         public void CargaPeliculaObjetoConJson(string jsonPelicula)
         {
             Pelicula peliculaCargada = JsonModel.ConvierteJsonAPelicula(jsonPelicula);
-            semaforo = true;
-            //if (!StateModel.ExisteKey("Usuario"))
-            //{
-            //    (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
-            //}
-            //else
-            //{
+            if (!StateModel.ExisteKey("Usuario"))
+            {
+                (Application.Current.RootVisual as PhoneApplicationFrame).Navigate(new Uri(@"/Views/Login.xaml", UriKind.Relative));
+            }
+            else
+            {
                 Usuario usuario = (Usuario)StateModel.ObtieneKey("Usuario");
                 PeliculaModel peliculaModel = new PeliculaModel();
                 peliculaModel.SubscribePelicula(peliculaCargada, usuario.session_id);
-                
-                if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Activar).ToString())
+
+                if (usuario.suscription_id == ((int)Enums.Enumsuscripcion.Desactivar).ToString())
                 {
-                    if (!peliculaCargada.paid_hd && ! peliculaCargada.paid_sd)
-                        MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OK); bool hayRed = NetworkInterface.GetIsNetworkAvailable();
-                    if (hayRed)
+                    MessageBoxResult resultMessage = new MessageBoxResult();
+                    if (!peliculaCargada.paid_hd && !peliculaCargada.paid_sd)
+                    {
+                        resultMessage = MessageBox.Show(string.Format("Estás por ver {0}" + Environment.NewLine + "calificación {1}" + Environment.NewLine + "costo $ {2}" + Environment.NewLine, peliculaCargada.title, peliculaCargada.classification, peliculaCargada.price_sd), "", MessageBoxButton.OKCancel);
+                    }
+                    else
                     {
                         PlayJson playJson = new PlayJson();
                         playJson.content_id = peliculaCargada.id;
                         playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
                         string jsonPostPlay = JsonConvert.SerializeObject(playJson);
                         peliculaModel.EjecutaMultimediaPelicula(playJson);
+                        peliculaModel.ShowEvent += new EventHandler(pelicula_showed);
+                    }
+                    if (resultMessage == MessageBoxResult.OK)
+                    {
+                        if (NetworkInterface.GetIsNetworkAvailable())
+                        {
+                            PlayJson playJson = new PlayJson();
+                            playJson.content_id = peliculaCargada.id;
+                            playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
+                            string jsonPostPlay = JsonConvert.SerializeObject(playJson);
+                            peliculaModel.EjecutaMultimediaPelicula(playJson);
+                            peliculaModel.ShowEvent += new EventHandler(pelicula_showed);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
+                            progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
+                            listaPeliculas.Visibility = System.Windows.Visibility.Visible;
+                            btnVerMas.Visibility = System.Windows.Visibility.Visible;
+                        }
+                    }
+                    else
+                    {
+                        progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
+                        listaPeliculas.Visibility = System.Windows.Visibility.Visible;
+                        btnVerMas.Visibility = System.Windows.Visibility.Visible;
+                    }
+                }
+                else
+                {
+                    if (NetworkInterface.GetIsNetworkAvailable())
+                    {
+                        PlayJson playJson = new PlayJson();
+                        playJson.content_id = peliculaCargada.id;
+                        playJson.session_id = ((Usuario)StateModel.ObtieneKey("Usuario")).session_id;
+                        string jsonPostPlay = JsonConvert.SerializeObject(playJson);
+                        peliculaModel.EjecutaMultimediaPelicula(playJson);
+                        peliculaModel.ShowEvent += new EventHandler(pelicula_showed);
                     }
                     else
                     {
                         MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
+                        progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
+                        listaPeliculas.Visibility = System.Windows.Visibility.Visible;
+                        btnVerMas.Visibility = System.Windows.Visibility.Visible;
                     }
-                }               
-            //}
+                }
+            }
+        }
+
+        public void pelicula_showed(object sender, EventArgs args)
+        {
+            progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
+            listaPeliculas.Visibility = System.Windows.Visibility.Visible;
+            btnVerMas.Visibility = System.Windows.Visibility.Visible;
         }
 
         //public void CargaPlayPost(string postdata, string url)
@@ -276,7 +327,7 @@ namespace Personal.Controles
         //    //parse it
         //}
 
-        
+
 
         //private void CargaPlayConJson(string jsonString)
         //{
@@ -362,11 +413,11 @@ namespace Personal.Controles
             Pelicula pelicula = listadoDePeliculas.Find(x => x.id == imgFavoritos.Tag);
             BitmapImage imag;
 
-            if (pelicula != null && pelicula.favorite)            
+            if (pelicula != null && pelicula.favorite)
                 imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/fav-activo.png", UriKind.RelativeOrAbsolute));
             else
                 imag = new System.Windows.Media.Imaging.BitmapImage(new Uri(@"/Imagenes/fav-inactivo.png", UriKind.RelativeOrAbsolute));
-            
+
 
             imgFavoritos.Source = imag;
         }
@@ -380,10 +431,10 @@ namespace Personal.Controles
         public void handleResponseFavorito(object sender, EventArgs args)
         {
             JsonRequest responseObject = sender as JsonRequest;
-            string response = responseObject.ResponseTxt;            
+            string response = responseObject.ResponseTxt;
             //parse it
         }
-      
+
 
         private void gridRating_Loaded(object sender, RoutedEventArgs e)
         {
@@ -454,23 +505,25 @@ namespace Personal.Controles
         {
             try
             {
+                progressBarLista.Visibility = System.Windows.Visibility.Visible;
+                btnVerMas.Visibility = System.Windows.Visibility.Collapsed;
                 Image img = sender as Image;
-                
+
                 usuario = StateModel.ObtieneKey("Usuario") as Usuario;
                 StateModel.CargaKey("esmas", true);
-                PeliculasPorGeneroJson verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;                
+                PeliculasPorGeneroJson verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;
                 verMasParametro.page = (Convert.ToInt16(verMasParametro.page) + 1).ToString();
-                
+
                 if (usuario != null)
                     verMasParametro.session_id = usuario.session_id;
                 string jsonString = JsonConvert.SerializeObject(verMasParametro);
-               
+
                 CargaPeliculasPost(jsonString, URL.MenuCategoria);
 
             }
             catch (Exception)
             {
-                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);                
+                MessageBox.Show("Ha ocurrido un error la app se cerrará.", "error", MessageBoxButton.OK);
             }
         }
 
@@ -479,9 +532,6 @@ namespace Personal.Controles
 
         }
 
-
-     
-        
     }
 }
 

@@ -33,12 +33,14 @@ namespace Personal.Controles
         Variables variables = new Variables();
         List<Pelicula> listadoDePeliculas;
         Usuario usuario = new Usuario();
-
+        int cantidadPaginas = 0;
+        PeliculasPorGeneroJson verMasParametro = new PeliculasPorGeneroJson();
+        bool topePaginas = false;
         void PeliculasGenero_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
-
+                verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;
             }
             catch (Exception)
             {
@@ -51,20 +53,18 @@ namespace Personal.Controles
         {
             try
             {
-
-                // SE MODIFICO SEGUN EL REQUERIMIENTO QUE NO ES UNA PELICULA LA PRIMERA.
                 List<Pelicula> lista = this.ObtenerPrevioPorGenero(json, cantidadPeliculas);
-                //Pelicula peliculaUnica = lista.First<Pelicula>();
                 foreach (Pelicula item in lista)
                 {
                     if (item.title.Length > 20)
                         item.title = item.title.Substring(0, 16) + "...";
                 }
-                //lista.Remove(peliculaUnica);
                 if (!StateModel.ExisteKey("VieneDeBuscar"))
                 {
-                    btnVerMas.Visibility = System.Windows.Visibility.Visible;
-
+                    if(!topePaginas)
+                        btnVerMas.Visibility = System.Windows.Visibility.Visible;
+                    else
+                        btnVerMas.Visibility = System.Windows.Visibility.Collapsed;
                 }
                 else
                 {
@@ -83,7 +83,6 @@ namespace Personal.Controles
 
                 progressBarLista.Visibility = System.Windows.Visibility.Collapsed;
                 progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
-
             }
             catch (Exception)
             {
@@ -98,7 +97,10 @@ namespace Personal.Controles
         {
             try
             {
-                JToken element = ExtraigoElementJson(jsonPeliculas);
+
+                KeyValuePair<int, JToken> keyValue = ExtraigoElementJson(jsonPeliculas);
+                JToken element = keyValue.Value;
+                cantidadPaginas = keyValue.Key;
                 if (element.Count() < cantidadPeliculas)
                     cantidadPeliculas = element.Count();
                 if (!StateModel.ExisteKey("esmas"))
@@ -119,20 +121,21 @@ namespace Personal.Controles
 
 
 
-        private static JToken ExtraigoElementJson(string jsonPeliculas)
+        private static KeyValuePair<int,JToken> ExtraigoElementJson(string jsonPeliculas)
         {
             JObject PelisGenero = JObject.Parse(jsonPeliculas);
             JToken response = PelisGenero["response"];
             JToken groups = response["groups"];
             JToken element = groups[0]["element"];
-            return element;
+            int cantidadPaginas = Convert.ToInt32(groups[0]["total_pages"].ToString()!=string.Empty ? groups[0]["total_pages"].ToString() : "1");
+            KeyValuePair<int, JToken> elementPages = new KeyValuePair<int, JToken>(cantidadPaginas, element);
+            return elementPages;
         }
 
         private void imgVer_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
             Image img = sender as Image;
-            string idPelicula = Convert.ToString(img.Tag);
-            //img.Source = PeliculaModel.BotonVer(true);
+            string idPelicula = Convert.ToString(img.Tag);            
             Usuario usuario = StateModel.ObtieneKey("Usuario") as Usuario;
             StateModel.CargaKey("idPelicula", idPelicula);
             this.VerPelicula(idPelicula, usuario);
@@ -225,8 +228,7 @@ namespace Personal.Controles
         {
             JsonRequest responseObject = sender as JsonRequest;
             string response = responseObject.ResponseTxt;
-            CargaListaPeliculas(response, 6);
-            //parse it
+            CargaListaPeliculas(response, 6);            
         }
 
         public void CargaPeliculaObjetoConJson(string jsonPelicula)
@@ -274,14 +276,12 @@ namespace Personal.Controles
                             MessageBox.Show("Para poder ver la película necesitas acceso a internet.");
                             progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
                             listaPeliculas.Visibility = System.Windows.Visibility.Visible;
-                            btnVerMas.Visibility = System.Windows.Visibility.Visible;
                         }
                     }
                     else
                     {
                         progressBarListaTotal.Visibility = System.Windows.Visibility.Collapsed;
                         listaPeliculas.Visibility = System.Windows.Visibility.Visible;
-                        btnVerMas.Visibility = System.Windows.Visibility.Visible;
                     }
                 }
                 else
@@ -312,38 +312,7 @@ namespace Personal.Controles
             listaPeliculas.Visibility = System.Windows.Visibility.Visible;
             btnVerMas.Visibility = System.Windows.Visibility.Visible;
         }
-
-        //public void CargaPlayPost(string postdata, string url)
-        //{
-        //    JsonRequest loginRequest = new JsonRequest();
-        //    loginRequest.Completed += new EventHandler(handleResponsePlay);
-        //    loginRequest.beginRequest(postdata, url);
-        //}
-        //public void handleResponsePlay(object sender, EventArgs args)
-        //{
-        //    JsonRequest responseObject = sender as JsonRequest;
-        //    string response = responseObject.ResponseTxt;
-        //    this.CargaPlayConJson(response);
-        //    //parse it
-        //}
-
-
-
-        //private void CargaPlayConJson(string jsonString)
-        //{
-        //    try
-        //    {
-        //        //PeliculaModel peliculaModel = new PeliculaModel();
-        //        //peliculaModel.EjecutaMultimediaPelicula(jsonString);
-
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
-
-
+       
         public void CargaDatosPeliculaPost(string postdata, string url)
         {
             JsonRequest PeliculaRequest = new JsonRequest();
@@ -506,13 +475,13 @@ namespace Personal.Controles
             try
             {
                 progressBarLista.Visibility = System.Windows.Visibility.Visible;
-                btnVerMas.Visibility = System.Windows.Visibility.Collapsed;
-                Image img = sender as Image;
-
                 usuario = StateModel.ObtieneKey("Usuario") as Usuario;
                 StateModel.CargaKey("esmas", true);
-                PeliculasPorGeneroJson verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;
+               
+                //PeliculasPorGeneroJson verMasParametro = StateModel.ObtieneKey("vermas") as PeliculasPorGeneroJson;
                 verMasParametro.page = (Convert.ToInt16(verMasParametro.page) + 1).ToString();
+                if (cantidadPaginas == Convert.ToInt32(verMasParametro.page))
+                    topePaginas = true;
 
                 if (usuario != null)
                     verMasParametro.session_id = usuario.session_id;

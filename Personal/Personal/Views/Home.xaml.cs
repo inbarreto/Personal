@@ -104,7 +104,8 @@ namespace Personal
             peliPrincipal.named_criteria = "genero_comedia";
             string post_dataPeliculas = JsonConvert.SerializeObject(peliPrincipal);
             
-            StateModel.CargaKey("vermas", peliPrincipal);
+            if(!StateModel.ExisteKey("vermas"))
+                StateModel.CargaKey("vermas", peliPrincipal);
 
             //ratingControl.EstrellasActivas(4);
             peliculasHome.CargaPeliculasPost(post_dataPeliculas, URL.MenuCategoria);
@@ -222,7 +223,9 @@ namespace Personal
                Generos genero = listaGeneros.Find(x => x.Genero == valor);
                StateModel.CargaKey("genero", genero.Genero);
                StateModel.CargaKey("named_criteria", genero.NameCriteria);
-               
+                PeliculasPorGeneroJson jsonPelicula = new PeliculasPorGeneroJson();
+                jsonPelicula.named_criteria = genero.NameCriteria;
+               StateModel.CargaKey("vermas",jsonPelicula);
                 NavigationService.Navigate(new Uri("/Views/PeliculasGenero.xaml", UriKind.Relative));
                 
             }
